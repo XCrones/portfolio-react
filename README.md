@@ -28,7 +28,7 @@
     - redux;
     - hooks;
 
-  ![TodoList](https://github.com/XCrones/portfolio-angular-14/blob/main/preview/todo.jpg)
+  ![TodoList](https://github.com/XCrones/portfolio-react/blob/main/preview/todo.png)
 
 - Shop:
 
@@ -57,7 +57,7 @@
     - redux;
     - hooks;
 
-  ![Fake Shop](https://github.com/XCrones/portfolio-angular-14/blob/main/preview/shop.jpg)
+  ![Fake Shop](https://github.com/XCrones/portfolio-react/blob/main/preview/shop.png)
 
 - Chat:
 
@@ -84,4 +84,4 @@
     - redux;
     - hooks;
 
-  ![Fake Shop](https://github.com/XCrones/portfolio-angular-14/blob/main/preview/chat.jpg)
+  ![Fake Shop](https://github.com/XCrones/portfolio-react/blob/main/preview/chat.png)
