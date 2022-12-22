@@ -1,0 +1,140 @@
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { userSignUp, userData } from "../../store/slices/auth.slice";
+import textShadow, { ITextShadow } from "../ui/textShadow";
+import { Sign } from "./Auth.component";
+
+const SignUpComponent = ({ closeProfile, isHideClose, toggleForm, input }: Sign) => {
+  const isNeon = useAppSelector((state) => state.appCommon.neon.value);
+  const styleShadowMedium = useAppSelector((state) => state.appCommon.shadow.stylesShadow.medium);
+  const [hoverBtnClose, setHoverBtnClose] = useState(false);
+
+  const responseErr = useAppSelector((state) => state.auth.error);
+  const isAuth = useAppSelector((state) => state.auth.isAuth);
+
+  const dispatch = useAppDispatch();
+
+  const {
+    reset,
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm({
+    mode: "onBlur",
+  });
+
+  const isResponse = () => responseErr.length > 0;
+
+  const defaultSettingNeon = (color: string, isHover: boolean): ITextShadow => {
+    return {
+      activeHover: true,
+      color: color,
+      colorShadow: color,
+      isHover: isHover,
+      isNeon: isNeon,
+      isSetColor: true,
+      styleShadow: styleShadowMedium,
+    };
+  };
+
+  const onSubmit = async (data: any) => {
+    if (isValid) {
+      const user: userData = {
+        email: data["email"] || "",
+        password: data["password"] || "",
+      };
+      await dispatch(userSignUp(user));
+      if (isAuth) {
+        reset();
+      }
+    }
+  };
+
+  const getError = (field: string) => (errors[field]?.message as string) || "Error!";
+
+  return (
+    <form className="h-full w-full flex flex-col justify-center gap-y-3" onSubmit={handleSubmit(onSubmit)}>
+      <div className="flex flex-row justify-between items-center gap-x-1">
+        <h2 className="capitalize text-xl text-center flex-auto">регистрация</h2>
+        {!isHideClose && (
+          <button
+            onClick={() => closeProfile()}
+            onMouseEnter={() => setHoverBtnClose(true)}
+            onMouseLeave={() => setHoverBtnClose(false)}
+            style={textShadow(defaultSettingNeon("#fff", hoverBtnClose))}
+            type="button"
+            className="btn-close text-xl transition-all duration-300"
+          >
+            <i className="bi bi-arrow-right-square"></i>
+          </button>
+        )}
+      </div>
+      <div className="flex flex-col gap-y-1">
+        <label className="capitalize text-sm">email: </label>
+        <input
+          minLength={input.min}
+          {...register("email", {
+            required: "обязательное поле",
+            pattern: {
+              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+              message: "email не валидный",
+            },
+          })}
+          type="email"
+          className="text-black px-2 py-1 rounded-lg overflow-hidden text-sm"
+        />
+        {errors?.email && (
+          <div className="text-xs text-white text-center first-letter:uppercase">{getError("email")}</div>
+        )}
+        {isResponse() && <div className="text-xs text-white text-center first-letter:uppercase">{responseErr}</div>}
+      </div>
+      <div className="flex flex-col gap-y-1">
+        <label className="capitalize text-sm">password: </label>
+        <input
+          minLength={input.min}
+          maxLength={input.max}
+          {...register("password", {
+            required: "обязательное поле",
+            minLength: {
+              value: input.min,
+              message: `Минимум ${input.min} символов`,
+            },
+            maxLength: {
+              value: input.max,
+              message: `Максимум ${input.max} символов`,
+            },
+          })}
+          type="password"
+          className="text-black px-2 py-1 rounded-lg overflow-hidden text-sm"
+        />
+        {errors?.password && (
+          <div className="text-xs text-white text-center first-letter:uppercase">{getError("password")}</div>
+        )}
+      </div>
+      <div className="w-full">
+        <button
+          disabled={!isValid}
+          type="submit"
+          className={`btn-submit capitalize w-full p-1 transition-all duration-300 
+          ${isValid ? "bg-sky-700 hover:bg-sky-500" : "bg-slate-500 cursor-not-allowed"}`}
+        >
+          отправить
+        </button>
+      </div>
+      <div className="flex flex-row items-center justify-center gap-x-1">
+        <span className="first-letter:uppercase">есть аккаунт?</span>
+        <button
+          onClick={() => toggleForm()}
+          type="button"
+          className="btn-toggle flex flex-row gap-x-2 hover:text-sky-500 transition-all duration-300"
+        >
+          <div className="capitalize">вход</div>
+          <i className="bi bi-arrow-right-square"></i>
+        </button>
+      </div>
+    </form>
+  );
+};
+
+export default SignUpComponent;

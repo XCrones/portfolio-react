@@ -1,0 +1,30 @@
+$color-green-neon: #00ff84;
+$color-green-shadow: #1fdb9d;
+$color-red-neon: #ff2121;
+$color-red-shadow: #ff3c00;
+$color-blue-neon: #0077ff;
+$color-blue-shadow: #0051ff;
+
+@mixin neon-shadow-text-light($color) {
+  text-shadow: 0 0 1px $color, 0 0 1px $color, 0 0 1px $color, 0 0 1px $color,
+    0 0 1px $color, 0 0 1px $color, 0 0 1px $color, 0 0 2px $color;
+}
+
+@mixin neon-shadow-text-medium($color) {
+  text-shadow: 0 0 2px $color, 0 0 2px $color, 0 0 2px $color, 0 0 2px $color,
+    0 0 2px $color, 0 0 2px $color, 0 0 2px $color, 0 0 6px $color;
+}
+
+@mixin neon-shadow-box-light($color) {
+  box-shadow: 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 0.8rem $color,
+    0 0 0.1rem $color, 0 0 0.1rem $color;
+}
+
+@mixin neon-shadow-box-medium($color) {
+  box-shadow: 0 0 0.1rem $color, 0 0 0.1rem $color, 0 0 1rem $color,
+    0 0 0.1rem $color, 0 0 1.4rem $color;
+}
+
+@mixin transition-shadow($timeS) {
+  transition: all $timeS + s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}

@@ -1,0 +1,16 @@
+.table-todos {
+  font-family: "Fjalla One", sans-serif;
+}
+.triangle {
+  position: relative;
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 0;
+    width: 0;
+    border-top: 15px solid #00ff62;
+    border-right: 15px solid transparent;
+  }
+}

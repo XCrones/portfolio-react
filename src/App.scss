@@ -1,0 +1,47 @@
+.main-bg {
+  background: #1f2738;
+  background: linear-gradient(
+    180deg,
+    #1f2738 0%,
+    #212c44 8%,
+    #1c2946 18%,
+    #1f2738 30%,
+    #141b29 74%
+  );
+}
+
+.load {
+  div {
+    &:nth-child(1) {
+      left: 0%;
+      background-color: #ff0000;
+      animation: startLoad 0.5s cubic-bezier(0.645, 0.045, 0.355, 1) infinite;
+    }
+    &:nth-child(2) {
+      left: 10%;
+      background-color: #008000;
+      animation: startLoad 0.7s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+    }
+    &:nth-child(3) {
+      left: 20%;
+      background-color: #0000ff;
+      animation: startLoad 0.9s cubic-bezier(0.39, 0.575, 0.565, 1) infinite;
+    }
+
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+  }
+}
+
+@keyframes startLoad {
+  0% {
+    left: 0%;
+  }
+  100% {
+    left: 100%;
+  }
+}
