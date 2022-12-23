@@ -5,7 +5,7 @@ import { ROUTER_LINKS } from "../../router-links";
 import { toggleHideAboutProject } from "../../store/slices/about-projects.slice";
 import { toggleHideHeader } from "../../store/slices/header.slice";
 import { builderNeonBox, builderNeonText } from "../../store/slices/shadow.slice";
-import style from "./projectMenu.module.scss";
+import style from "./project-menu.module.scss";
 
 export interface IPropsMenuProject {
   link: string;

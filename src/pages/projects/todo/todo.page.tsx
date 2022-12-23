@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import InfoProject from "../../../components/aboutProject/aboutProject.component";
-import ProjectMenuComponent, { IPropsMenuProject } from "../../../components/project-menu/projectMenu.component";
+import InfoProject from "../../../components/about-project/about-project.component";
+import ProjectMenuComponent, { IPropsMenuProject } from "../../../components/project-menu/project-menu.component";
 import ModalComponent from "../../../components/todo/modal.component";
 import PanelComponent from "../../../components/todo/panel.component";
 import PopupComponent from "../../../components/todo/popup.component";

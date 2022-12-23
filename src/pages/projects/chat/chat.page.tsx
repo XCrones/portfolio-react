@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import ProjectMenuComponent, { IPropsMenuProject } from "../../../components/project-menu/projectMenu.component";
+import ProjectMenuComponent, { IPropsMenuProject } from "../../../components/project-menu/project-menu.component";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import { setHideHeader } from "../../../store/slices/header.slice";
 import { toggleHideProjects } from "../../../store/slices/projects.slice";
-import InfoProject from "../../../components/aboutProject/aboutProject.component";
+import InfoProject from "../../../components/about-project/about-project.component";
 import RoomComponent from "../../../components/chat/room.component";
 import AuthComponent from "../../../components/auth/auth.component";
 import AddCreateComponent, { IPropsAddCreate, ILengthInput } from "../../../components/chat/add-create.component";

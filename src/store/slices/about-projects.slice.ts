@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IAboutProject } from "../../components/aboutProject/aboutProject.component";
+import { IAboutProject } from "../../components/about-project/about-project.component";
 
 interface IStateInitial {
   todo: IAboutProject[];
