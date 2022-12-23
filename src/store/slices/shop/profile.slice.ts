@@ -6,40 +6,40 @@ import {
   decremUnparcingCart,
   deleteItemUnparcingCart,
   incremUnparcingCart,
-  UnparsingItem,
+  IUnparsingItem,
   updateUnparsingCart,
 } from "./cart.slice";
-import { ProductItem } from "./products.slice";
+import { IProductItem } from "./products.slice";
 import { arrayRemove, arrayUnion, doc, getDoc, onSnapshot, setDoc, Unsubscribe, updateDoc } from "firebase/firestore";
 import { dataBase } from "../../../firebase";
 
-interface CartItem {
+interface ICartItem {
   id: number;
   count: number;
 }
 
-interface ProductsItem {
+interface IProductsItem {
   id: number;
   count: number;
   price: number;
 }
 
-export interface PurchaseItem {
+export interface IPurchaseItem {
   date: string;
-  products: ProductsItem[];
+  products: IProductsItem[];
 }
 
-export interface Profile {
-  cart: CartItem[];
-  purchases: PurchaseItem[];
+export interface IProfile {
+  cart: ICartItem[];
+  purchases: IPurchaseItem[];
 }
 
-export interface FieldsDb {
+export interface IFieldsDb {
   cart: "cart";
   purchases: "purchases";
 }
 
-interface Load {
+interface ILoad {
   cart: boolean;
   profile: boolean;
   addItem: boolean;
@@ -48,11 +48,11 @@ interface Load {
   deleteItem: boolean;
 }
 
-interface InititialState {
-  profile: Profile;
-  fieldsDB: FieldsDb;
+interface IStateInitial {
+  profile: IProfile;
+  fieldsDB: IFieldsDb;
   collection: "shop-users";
-  isLoad: Load;
+  isLoad: ILoad;
 }
 
 let profileRef: Unsubscribe | undefined = undefined;
@@ -64,11 +64,11 @@ const unsubProfile = () => {
 };
 
 export const addToCart = createAsyncThunk<
-  CartItem,
-  ProductItem,
-  { dispatch: Dispatch; state: RootState; fullFilled: CartItem }
+  ICartItem,
+  IProductItem,
+  { dispatch: Dispatch; state: RootState; fullFilled: ICartItem }
 >("profile/addToCart", async function (item, { dispatch, getState, fulfillWithValue }) {
-  const parseItem: CartItem = {
+  const parseItem: ICartItem = {
     id: item.id,
     count: 1,
   };
@@ -104,7 +104,7 @@ export const updateProfile = createAsyncThunk<
   const isAuth = getState().auth.isAuth;
 
   if (isAuth) {
-    const cartProfile: CartItem[] = getState().shop.profile.profile.cart;
+    const cartProfile: ICartItem[] = getState().shop.profile.profile.cart;
 
     if (!!cartProfile) {
       const collection = getState().shop.profile.collection;
@@ -125,10 +125,10 @@ export const updateProfile = createAsyncThunk<
   return fulfillWithValue(undefined);
 });
 
-export const incrementItem = createAsyncThunk<CartItem, number, { dispatch: Dispatch; state: RootState }>(
+export const incrementItem = createAsyncThunk<ICartItem, number, { dispatch: Dispatch; state: RootState }>(
   "profile/incrementItem",
   async function (id, { dispatch, getState }) {
-    const parseitem: CartItem = {
+    const parseitem: ICartItem = {
       id: id,
       count: 1,
     };
@@ -138,10 +138,10 @@ export const incrementItem = createAsyncThunk<CartItem, number, { dispatch: Disp
   }
 );
 
-export const decrementItem = createAsyncThunk<CartItem, number, { dispatch: Dispatch; state: RootState }>(
+export const decrementItem = createAsyncThunk<ICartItem, number, { dispatch: Dispatch; state: RootState }>(
   "profile/decrementItem",
   async function (id, { dispatch, getState }) {
-    const parseitem: CartItem = {
+    const parseitem: ICartItem = {
       id: id,
       count: 1,
     };
@@ -151,10 +151,10 @@ export const decrementItem = createAsyncThunk<CartItem, number, { dispatch: Disp
   }
 );
 
-export const deleteItem = createAsyncThunk<CartItem, number, { dispatch: Dispatch; state: RootState }>(
+export const deleteItem = createAsyncThunk<ICartItem, number, { dispatch: Dispatch; state: RootState }>(
   "profile/deleteItem",
   async function (id, { dispatch, getState }) {
-    const parseitem: CartItem = {
+    const parseitem: ICartItem = {
       id: id,
       count: 1,
     };
@@ -188,20 +188,20 @@ export const deleteItem = createAsyncThunk<CartItem, number, { dispatch: Dispatc
 );
 
 export const tryProfile = createAsyncThunk<
-  Profile,
+  IProfile,
   undefined,
-  { dispatch: Dispatch; state: RootState; rejectValue: null; fullFilled: Profile }
+  { dispatch: Dispatch; state: RootState; rejectValue: null; fullFilled: IProfile }
 >("profile/tryProfile", async function (_, { dispatch, getState, rejectWithValue, fulfillWithValue }) {
   const products = getState().shop.products.products;
   const searchData = localStorage.getItem("cart");
   const isAuth = getState().auth.isAuth;
   const uid = getState().auth.user.uid;
 
-  const searchItem = (id: number): ProductItem | undefined => products.find((item) => item.id === id);
+  const searchItem = (id: number): IProductItem | undefined => products.find((item) => item.id === id);
 
-  const makeCart = (arr: CartItem[]): CartItem[] => {
-    const tempCart: CartItem[] = [];
-    const makingCart: UnparsingItem[] = [];
+  const makeCart = (arr: ICartItem[]): ICartItem[] => {
+    const tempCart: ICartItem[] = [];
+    const makingCart: IUnparsingItem[] = [];
     // eslint-disable-next-line array-callback-return
     arr.map((value) => {
       const searchProduct = searchItem(value.id);
@@ -220,7 +220,7 @@ export const tryProfile = createAsyncThunk<
     return tempCart;
   };
 
-  const tempProfile: Profile = {
+  const tempProfile: IProfile = {
     cart: [],
     purchases: [],
   };
@@ -329,10 +329,10 @@ export const buy = createAsyncThunk<
     const products = getState().shop.products.products;
     const cart = getState().shop.profile.profile.cart;
 
-    const searchItem = (id: number): ProductItem | undefined => products.find((item) => item.id === id);
+    const searchItem = (id: number): IProductItem | undefined => products.find((item) => item.id === id);
 
     if (!!cart) {
-      const purchase: PurchaseItem = {
+      const purchase: IPurchaseItem = {
         date: "",
         products: [],
       };
@@ -371,7 +371,7 @@ export const buy = createAsyncThunk<
   return fulfillWithValue(undefined);
 });
 
-const initialStateValue: InititialState = {
+const initialStateValue: IStateInitial = {
   collection: "shop-users",
   profile: {
     cart: [],
@@ -399,7 +399,7 @@ export const ProfileSlice = createSlice({
       state.profile.cart = [];
       state.profile.purchases = [];
     },
-    setProfile(state, action: PayloadAction<Profile>) {
+    setProfile(state, action: PayloadAction<IProfile>) {
       state.profile = { ...action.payload };
     },
   },

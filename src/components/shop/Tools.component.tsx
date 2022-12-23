@@ -2,22 +2,6 @@ import React, { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { setCurrFilter, setSearch, toggleStateFilter } from "../../store/slices/shop/products.slice";
 
-const useInput = (initialValue: string) => {
-  const [value, setValue] = useState(initialValue);
-
-  const onChange = (event: any) => {
-    setValue(event.target.value);
-  };
-
-  const clear = () => setValue("");
-
-  return {
-    bind: { value, onChange },
-    value,
-    clear,
-  };
-};
-
 const ToolsComponent = () => {
   const dispatch = useAppDispatch();
 
@@ -26,28 +10,19 @@ const ToolsComponent = () => {
     filterItems: itemsFilter,
     stateCurrFilter,
   } = useAppSelector((state) => state.shop.products.filter);
+
   const [isHideFilters, setHideFilters] = useState(true);
-
-  const input = useInput("");
-
-  const toggleIsHideFilters = () => {
-    setHideFilters(!isHideFilters);
-  };
 
   const selectFilter = (value: string) => {
     dispatch(setCurrFilter(value));
     setHideFilters(true);
   };
 
-  const updateSearch = () => {
-    dispatch(setSearch(input.value));
-  };
-
   return (
     <div className="w-full flex flex-row items-center bg-purple-800 px-2 gap-x-1">
       <div className="flex-[0_1_50%] relative flex flex-row items-center justify-center gap-x-3">
         <button
-          onClick={() => toggleIsHideFilters()}
+          onClick={() => setHideFilters(!isHideFilters)}
           type="button"
           className="btn-toggle flex flex-row items-center gap-x-1 text-xl"
         >
@@ -85,8 +60,9 @@ const ToolsComponent = () => {
       </div>
       <div className="flex-[0_1_50%] h-full w-full flex justify-center py-[10px]">
         <input
-          {...input.bind}
-          onKeyUp={() => updateSearch()}
+          onChange={(e) => {
+            dispatch(setSearch(e.target.value as string));
+          }}
           className="w-full sm:w-1/2 p-1 rounded-md text-black"
           type="text"
           placeholder="поиск"

@@ -1,49 +1,45 @@
 import React, { useState } from "react";
 import { useAppSelector } from "../../hooks/redux";
-import LoadComponent, { MetaLoad } from "../load/Load.component";
-import SignInComponent from "./SignIn.component";
-import SignUpComponent from "./SignUp.component";
+import LoadComponent, { IMetaLoad } from "../load/load.component";
+import SignInComponent from "./signIn.component";
+import SignUpComponent from "./signUp.component";
 
-interface InputLength {
+interface ILengthInput {
   max: number;
   min: number;
 }
 
-export interface Sign {
+export interface ISign {
   isHideClose: boolean;
   toggleForm: Function;
   closeProfile: Function;
-  input: InputLength;
+  input: ILengthInput;
 }
 
-interface AuthProps {
+interface IPropsAuth {
   closeForm: Function;
   isHideBtnCLose: boolean;
 }
 
-export const AuthComponent = ({ closeForm, isHideBtnCLose }: AuthProps) => {
+export const AuthComponent = ({ closeForm, isHideBtnCLose }: IPropsAuth) => {
   const [isToggleForm, setToggleForm] = useState(true);
-  const isLoad = useAppSelector((state) => state.auth.isLoad);
   const styleShadowMedium = useAppSelector((state) => state.appCommon.shadow.stylesShadow.medium);
 
-  const INPUT_LENGTH: InputLength = {
-    max: 10,
-    min: 4,
-  };
+  const isLoad = useAppSelector((state) => state.auth.isLoad);
 
-  const toggleForm = () => {
-    setToggleForm(!isToggleForm);
-  };
-
-  const closeProfile = () => {
-    closeForm();
-  };
-
-  const load: MetaLoad[] = [
+  const load: IMetaLoad[] = [
     { color: "#ff0000", style: styleShadowMedium, hover: false },
     { color: "#008000", style: styleShadowMedium, hover: false },
     { color: "#0000ff", style: styleShadowMedium, hover: false },
   ];
+
+  const lengthInput: ILengthInput = {
+    max: 10,
+    min: 4,
+  };
+
+  const toggleForm = () => setToggleForm(!isToggleForm);
+  const closeProfile = () => closeForm();
 
   return (
     <div className="h-full w-full p-3 overflow-hidden relative">
@@ -58,7 +54,7 @@ export const AuthComponent = ({ closeForm, isHideBtnCLose }: AuthProps) => {
             closeProfile={closeProfile}
             toggleForm={toggleForm}
             isHideClose={isHideBtnCLose}
-            input={INPUT_LENGTH}
+            input={lengthInput}
           />
         </div>
       )}
@@ -68,7 +64,7 @@ export const AuthComponent = ({ closeForm, isHideBtnCLose }: AuthProps) => {
             closeProfile={closeProfile}
             toggleForm={toggleForm}
             isHideClose={isHideBtnCLose}
-            input={INPUT_LENGTH}
+            input={lengthInput}
           />
         </div>
       )}

@@ -1,0 +1,30 @@
+.title {
+  font-family: "Yatra One", cursive;
+}
+
+.about-me {
+  font-family: "Fjalla One", sans-serif;
+}
+
+.show-img {
+  animation: show-item 0.4s ease-out;
+}
+
+.show-title {
+  animation: show-item 0.5s ease-out;
+}
+
+.show-text {
+  animation: show-item 0.6s ease-out;
+}
+
+@keyframes show-item {
+  0% {
+    scale: 0;
+    transform: translateX(-100px);
+  }
+  100% {
+    scale: 1;
+    transform: translateX(0px);
+  }
+}

@@ -1,18 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export interface FilterBy {
+export interface IFilterBy {
   price: string;
   rate: string;
   amount: string;
 }
 
-export const filterBy: FilterBy = {
-  price: "цене",
-  rate: "рейтингу",
-  amount: "остатку",
-};
-
-export interface ProductItem {
+export interface IProductItem {
   id: number;
   title: string;
   price: number;
@@ -25,19 +19,25 @@ export interface ProductItem {
   };
 }
 
-interface FilterItem {
+export const filterBy: IFilterBy = {
+  price: "цене",
+  rate: "рейтингу",
+  amount: "остатку",
+};
+
+interface IFilterItem {
   filterItems: string[];
   currFilter: string;
   stateCurrFilter: boolean;
 }
 
-interface State {
-  filter: FilterItem;
+interface IStateInitial {
+  filter: IFilterItem;
   search: string;
-  products: ProductItem[];
+  products: IProductItem[];
 }
 
-const initialStateValue: State = {
+const initialStateValue: IStateInitial = {
   filter: {
     filterItems: [filterBy.price, filterBy.rate, filterBy.amount],
     currFilter: filterBy.price,

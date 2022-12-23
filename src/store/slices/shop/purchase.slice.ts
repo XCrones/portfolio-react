@@ -1,27 +1,27 @@
 import { createAsyncThunk, createSlice, Dispatch } from "@reduxjs/toolkit";
 import { RootState } from "../..";
-import { ProductItem } from "./products.slice";
-import { PurchaseItem } from "./profile.slice";
+import { IProductItem } from "./products.slice";
+import { IPurchaseItem } from "./profile.slice";
 
-interface SelectPurchaseItem {
+interface ISelectPurchaseItem {
   count: number;
   price: number;
   title: string;
   image: string;
 }
 
-export interface SelectPurchase {
+export interface ISelectPurchase {
   date: string;
   totalPrice: number;
-  items: SelectPurchaseItem[];
+  items: ISelectPurchaseItem[];
 }
 
-interface State {
-  purchase: SelectPurchase;
+interface IStateInitial {
+  purchase: ISelectPurchase;
   isHide: boolean;
 }
 
-const initialStateValue: State = {
+const initialStateValue: IStateInitial = {
   isHide: true,
   purchase: {
     date: "",
@@ -30,13 +30,13 @@ const initialStateValue: State = {
   },
 };
 
-export const openPurchase = createAsyncThunk<SelectPurchase, PurchaseItem, { dispatch: Dispatch; state: RootState }>(
+export const openPurchase = createAsyncThunk<ISelectPurchase, IPurchaseItem, { dispatch: Dispatch; state: RootState }>(
   "cart/openPurchase",
   async function (item, { dispatch, getState }) {
     const products = getState().shop.products.products;
-    const searchItem = (id: number): ProductItem | undefined => products.find((item) => item.id === id);
+    const searchItem = (id: number): IProductItem | undefined => products.find((item) => item.id === id);
 
-    const totalPrice = (arr: SelectPurchaseItem[]): number => {
+    const totalPrice = (arr: ISelectPurchaseItem[]): number => {
       if (arr.length > 0) {
         const sums = arr.map((item) => item.price * item.count);
         const result = sums.reduce(function (sum, current) {
@@ -48,7 +48,7 @@ export const openPurchase = createAsyncThunk<SelectPurchase, PurchaseItem, { dis
       return 0;
     };
 
-    const makingPurchase: SelectPurchase = {
+    const makingPurchase: ISelectPurchase = {
       date: item.date,
       totalPrice: 0,
       items: [],

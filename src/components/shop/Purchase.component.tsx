@@ -5,9 +5,9 @@ import { slicePrice, sliceString } from "../../store/slices/shop/cart.slice";
 import { closePurchase } from "../../store/slices/shop/purchase.slice";
 
 const PurchaseComponent = () => {
-  const purchase = useAppSelector((state) => state.shop.purchase.purchase);
-
   const dispatch = useAppDispatch();
+
+  const purchase = useAppSelector((state) => state.shop.purchase.purchase);
 
   const [titleLength, setTitleLength] = useState(30);
 

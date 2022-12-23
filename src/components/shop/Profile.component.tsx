@@ -1,57 +1,37 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import usePaginator from "../../hooks/paginator";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { userSignOut } from "../../store/slices/auth.slice";
+import { builderNeonText } from "../../store/slices/shadow.slice";
 import { slicePrice } from "../../store/slices/shop/cart.slice";
 import { showProfile } from "../../store/slices/shop/header.slice";
-import { profileSignOut, PurchaseItem } from "../../store/slices/shop/profile.slice";
+import { profileSignOut, IPurchaseItem } from "../../store/slices/shop/profile.slice";
 import { openPurchase } from "../../store/slices/shop/purchase.slice";
-import AuthComponent from "../auth/Auth.component";
-import textShadow, { ITextShadow } from "../ui/textShadow";
-import PurchaseComponent from "./Purchase.component";
+import AuthComponent from "../auth/auth.component";
+import PurchaseComponent from "./purchase.component";
 
 const ProfileComponent = () => {
+  const dispatch = useAppDispatch();
+
   const isNeon = useAppSelector((state) => state.appCommon.neon.value);
-  const styleShadowMedium = useAppSelector((state) => state.appCommon.shadow.stylesShadow.medium);
+  const shadowLight = useAppSelector((state) => state.appCommon.shadow.stylesShadow.light);
   const { purchases } = useAppSelector((state) => state.shop.profile.profile);
   const { userName } = useAppSelector((state) => state.auth.user);
   const { isAuth } = useAppSelector((state) => state.auth);
   const isLoadData = useAppSelector((state) => state.shop.profile.isLoad.profile);
   const isHidePurchase = useAppSelector((state) => state.shop.purchase.isHide);
 
-  const dispatch = useAppDispatch();
-
-  const [hoverBtnClose, setHoverBtnClose] = useState(false);
-
   const { currentData, pages, isCurrentPage, jumpPage, editSumItems } = usePaginator(5, purchases);
-
-  const defaultSettingNeon = (color: string, isHover: boolean): ITextShadow => {
-    return {
-      activeHover: true,
-      color: color,
-      colorShadow: color,
-      isHover: isHover,
-      isNeon: isNeon,
-      isSetColor: true,
-      styleShadow: styleShadowMedium,
-    };
-  };
 
   const makePathImgLoad = (name: string): string => require(`../../assets/img/${name}.svg`);
 
-  const selectPurchase = (item: PurchaseItem) => {
-    dispatch(openPurchase(item));
-  };
-
-  const totalPrice = (item: PurchaseItem): number => {
+  const totalPrice = (item: IPurchaseItem): number => {
     return item.products.reduce(function (sum, current) {
       return sum + current.price * current.count;
     }, 0);
   };
 
-  const closeProfile = () => {
-    dispatch(showProfile());
-  };
+  const closeProfile = () => dispatch(showProfile());
 
   const resizePaginator = () => {
     const width = window.innerWidth;
@@ -81,9 +61,14 @@ const ProfileComponent = () => {
             <h3 className="capitalize text-lg">профиль</h3>
             <button
               onClick={() => closeProfile()}
-              onMouseEnter={() => setHoverBtnClose(true)}
-              onMouseLeave={() => setHoverBtnClose(false)}
-              style={textShadow(defaultSettingNeon("#fff", hoverBtnClose))}
+              onMouseEnter={(event) => {
+                const neonText = builderNeonText(shadowLight, "#fff", true, isNeon);
+                event.currentTarget.style.textShadow = neonText.textShadow;
+                event.currentTarget.style.color = neonText.color;
+              }}
+              onMouseLeave={(event) => {
+                event.currentTarget.style.textShadow = "";
+              }}
               className="btn-close text-xl transition-all duration-300"
             >
               <i className="bi bi-arrow-right-square"></i>
@@ -105,7 +90,7 @@ const ProfileComponent = () => {
             {currentData().map((item, idx) => (
               <button
                 key={idx}
-                onClick={() => selectPurchase(item)}
+                onClick={() => dispatch(openPurchase(item))}
                 className={`btn-purchase flex flex-row justify-between items-center 
               gap-x-3 py-[10px] px-2 bg-white text-black rounded-md text-xs md:text-base`}
               >

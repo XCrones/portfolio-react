@@ -1,19 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { userSignUp, userData } from "../../store/slices/auth.slice";
-import textShadow, { ITextShadow } from "../ui/textShadow";
-import { Sign } from "./Auth.component";
+import { userSignUp, IUserData } from "../../store/slices/auth.slice";
+import { builderNeonText } from "../../store/slices/shadow.slice";
+import { ISign } from "./auth.component";
 
-const SignUpComponent = ({ closeProfile, isHideClose, toggleForm, input }: Sign) => {
+const SignUpComponent = ({ closeProfile, isHideClose, toggleForm, input }: ISign) => {
+  const dispatch = useAppDispatch();
+
   const isNeon = useAppSelector((state) => state.appCommon.neon.value);
   const styleShadowMedium = useAppSelector((state) => state.appCommon.shadow.stylesShadow.medium);
-  const [hoverBtnClose, setHoverBtnClose] = useState(false);
 
-  const responseErr = useAppSelector((state) => state.auth.error);
-  const isAuth = useAppSelector((state) => state.auth.isAuth);
-
-  const dispatch = useAppDispatch();
+  const { error: responseErr, isAuth } = useAppSelector((state) => state.auth);
 
   const {
     reset,
@@ -25,22 +23,11 @@ const SignUpComponent = ({ closeProfile, isHideClose, toggleForm, input }: Sign)
   });
 
   const isResponse = () => responseErr.length > 0;
-
-  const defaultSettingNeon = (color: string, isHover: boolean): ITextShadow => {
-    return {
-      activeHover: true,
-      color: color,
-      colorShadow: color,
-      isHover: isHover,
-      isNeon: isNeon,
-      isSetColor: true,
-      styleShadow: styleShadowMedium,
-    };
-  };
+  const getError = (field: string) => (errors[field]?.message as string) || "Error!";
 
   const onSubmit = async (data: any) => {
     if (isValid) {
-      const user: userData = {
+      const user: IUserData = {
         email: data["email"] || "",
         password: data["password"] || "",
       };
@@ -51,8 +38,6 @@ const SignUpComponent = ({ closeProfile, isHideClose, toggleForm, input }: Sign)
     }
   };
 
-  const getError = (field: string) => (errors[field]?.message as string) || "Error!";
-
   return (
     <form className="h-full w-full flex flex-col justify-center gap-y-3" onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-row justify-between items-center gap-x-1">
@@ -60,9 +45,14 @@ const SignUpComponent = ({ closeProfile, isHideClose, toggleForm, input }: Sign)
         {!isHideClose && (
           <button
             onClick={() => closeProfile()}
-            onMouseEnter={() => setHoverBtnClose(true)}
-            onMouseLeave={() => setHoverBtnClose(false)}
-            style={textShadow(defaultSettingNeon("#fff", hoverBtnClose))}
+            onMouseEnter={(event) => {
+              const neonText = builderNeonText(styleShadowMedium, "#fff", true, isNeon);
+              event.currentTarget.style.textShadow = neonText.textShadow;
+              event.currentTarget.style.color = neonText.color;
+            }}
+            onMouseLeave={(event) => {
+              event.currentTarget.style.textShadow = "";
+            }}
             type="button"
             className="btn-close text-xl transition-all duration-300"
           >

@@ -1,33 +1,26 @@
 import React from "react";
-import "./App.scss";
+import style from "./App.module.scss";
 import { Route, Routes } from "react-router-dom";
-import HomePage from "./pages/home/HomePage";
-import ProjectPage from "./pages/projects/ProjectsPage";
-import ContactsPage from "./pages/contacts/ContactsPage";
-import TodoPage from "./pages/projects/todo/TodoPage";
-import ShopPage from "./pages/projects/shop/ShopPage";
-import ChatPage from "./pages/projects/chat/ChatPage";
-import HeaderComponent from "./components/header/HeaderComponent";
-import FooterComponent from "./components/footer/FooterComponent";
+import HomePage from "./pages/home/home.page";
+import ProjectPage from "./pages/projects/projects.page";
+import ContactsPage from "./pages/contacts/contacts.page";
+import TodoPage from "./pages/projects/todo/todo.page";
+import ShopPage from "./pages/projects/shop/shop.page";
+import ChatPage from "./pages/projects/chat/chat.page";
+import HeaderComponent from "./components/header/header.component";
+import FooterComponent from "./components/footer/footer.component";
 import { useAppSelector } from "./hooks/redux";
-import boxShadow, { IBoxShadow } from "./components/ui/boxShadow";
+import { builderNeonBox } from "./store/slices/shadow.slice";
+import { ROUTER_LINKS } from "./router-links";
 
 const App = () => {
   const isHeader = useAppSelector((state) => state.header.isHide);
-  const styleShadowMedium = useAppSelector((state) => state.appCommon.shadow.stylesShadow.medium);
+  const shadowLight = useAppSelector((state) => state.appCommon.shadow.stylesShadow.medium);
   const blueNeon = useAppSelector((state) => state.appCommon.shadow.blueNeon);
   const isNeon = useAppSelector((state) => state.appCommon.neon.value);
 
-  const boxNeon: IBoxShadow = {
-    style: styleShadowMedium,
-    color: blueNeon,
-    isNeon: isNeon,
-    activeHover: false,
-    isHover: false,
-  };
-
   return (
-    <div className="min-h-screen flex flex-col bg-[#1f2738] relative">
+    <div className="min-h-screen flex flex-col bg-main-bg relative">
       {!isHeader && (
         <header className="flex-[0_1_80px] h-full flex">
           <div className="min-h-full min-w-full flex-auto">
@@ -36,18 +29,18 @@ const App = () => {
         </header>
       )}
       <main
-        style={boxShadow(boxNeon)}
-        className="flex-auto m-[10px] rounded-[5px] overflow-hidden transition-all duration-500 flex main-bg"
+        style={builderNeonBox(shadowLight, blueNeon, false, isNeon)}
+        className={`flex-auto m-[10px] rounded-[5px] overflow-hidden transition-all duration-500 flex ${style["main-bg"]}`}
       >
         <div className="min-h-full min-w-full flex-auto">
           <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="projects" element={<ProjectPage />}>
-              <Route path="todo" element={<TodoPage />} />
-              <Route path="shop" element={<ShopPage />} />
-              <Route path="chat" element={<ChatPage />} />
+            <Route path={ROUTER_LINKS.home.link} element={<HomePage />} />
+            <Route path={ROUTER_LINKS.projects.link} element={<ProjectPage />}>
+              <Route path={ROUTER_LINKS.projects.children.todo.link} element={<TodoPage />} />
+              <Route path={ROUTER_LINKS.projects.children.shop.link} element={<ShopPage />} />
+              <Route path={ROUTER_LINKS.projects.children.chat.link} element={<ChatPage />} />
             </Route>
-            <Route path="contacts" element={<ContactsPage />} />
+            <Route path={ROUTER_LINKS.contacts.link} element={<ContactsPage />} />
           </Routes>
         </div>
       </main>

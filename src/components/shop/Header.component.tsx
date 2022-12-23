@@ -1,18 +1,20 @@
 import React, { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { showCart, showProfile } from "../../store/slices/shop/header.slice";
-import CartComponent from "./Cart.component";
+import CartComponent from "./cart.component";
 
-import style from "./Header.module.scss";
-import ProfileComponent from "./Profile.component";
-import ToolsComponent from "./Tools.component";
+import style from "./header.module.scss";
+import ProfileComponent from "./profile.component";
+import ToolsComponent from "./tools.component";
 
 const HeaderComponent = () => {
-  const [isHideHamburger, setHideHamburger] = useState(true);
+  const dispatch = useAppDispatch();
+
+  const isAuth = useAppSelector((state) => state.auth.isAuth);
   const sumCart = useAppSelector((state) => state.shop.cart.unparsingCart.length);
   const { isHideCart, isHideProfile } = useAppSelector((state) => state.shop.header);
-  const { isAuth } = useAppSelector((state) => state.auth);
-  const dispatch = useAppDispatch();
+
+  const [isHideHamburger, setHideHamburger] = useState(true);
 
   const toggleHamburger = () => setHideHamburger(!isHideHamburger);
 
@@ -47,7 +49,10 @@ const HeaderComponent = () => {
           </div>
           <div className="">
             <button onClick={() => dispatch(showCart())} type="button" className="relative btn-cart">
-              <div className="absolute top-[30%] left-1/2 -translate-y-1/2 -translate-x-1/2 flex items-center justify-center font-bold">
+              <div
+                className={`absolute top-[30%] left-1/2 -translate-y-1/2 -translate-x-1/2 
+              flex items-center justify-center font-bold`}
+              >
                 {sumCart > 0 && <div className="text-sm bg-white text-black px-1 rounded-full">{sumCart}</div>}
               </div>
               <i className="bi bi-cart2"></i>

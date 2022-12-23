@@ -7,15 +7,31 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { RootState } from "..";
 import { auth } from "../../firebase";
 
-export interface Errors {
+interface IErrors {
   error: string;
   title: string;
 }
 
-const errCode: Errors[] = [
+export interface IUserData {
+  email: string;
+  password: string;
+}
+
+interface IUser {
+  userName: string;
+  uid: string;
+}
+
+interface IStateInitial {
+  isAuth: boolean;
+  user: IUser;
+  isLoad: boolean;
+  error: string;
+}
+
+const errCode: IErrors[] = [
   {
     error: "auth/email-already-in-use",
     title: "пользователь с таким email уже имется",
@@ -50,26 +66,9 @@ const searchError = (err: string): string | undefined => {
 
 const getUserName = (email: string | null): string => (!!email ? email.split("@")[0] : "");
 
-export interface userData {
-  email: string;
-  password: string;
-}
-
-interface IUser {
-  userName: string;
-  uid: string;
-}
-
-interface InitialState {
-  isAuth: boolean;
-  user: IUser;
-  isLoad: boolean;
-  error: string;
-}
-
 export const userSignIn = createAsyncThunk<
   IUser,
-  userData,
+  IUserData,
   { dispatch: Dispatch; rejectValue: string; fullFilled: IUser }
 >("auth/userSignIn", async function (user, { rejectWithValue, fulfillWithValue }) {
   if (!user.email || !user.password) {
@@ -101,7 +100,7 @@ export const userSignIn = createAsyncThunk<
 
 export const userSignUp = createAsyncThunk<
   IUser,
-  userData,
+  IUserData,
   { dispatch: Dispatch; rejectValue: string; fullFilled: IUser }
 >("auth/userSignUp", async function (user, { rejectWithValue, fulfillWithValue }) {
   if (!user.email || !user.password) {
@@ -173,7 +172,7 @@ export const tryUser = createAsyncThunk<IUser, undefined, { dispatch: Dispatch; 
   }
 );
 
-const initialStateValue: InitialState = {
+const initialStateValue: IStateInitial = {
   isAuth: false,
   isLoad: false,
   error: "",

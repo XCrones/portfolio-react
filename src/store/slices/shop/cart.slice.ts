@@ -1,17 +1,17 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ProductItem } from "./products.slice";
+import { IProductItem } from "./products.slice";
 
-export interface UnparsingItem {
-  product: ProductItem;
+export interface IUnparsingItem {
+  product: IProductItem;
   count: number;
 }
 
-interface InitialState {
-  unparsingCart: UnparsingItem[];
+interface IStateInitial {
+  unparsingCart: IUnparsingItem[];
   totalPrice: number;
 }
 
-const initialStateValue: InitialState = {
+const initialStateValue: IStateInitial = {
   unparsingCart: [],
   totalPrice: 0,
 };
@@ -20,14 +20,14 @@ export const CartSlice = createSlice({
   name: "cart",
   initialState: initialStateValue,
   reducers: {
-    updateUnparsingCart(state, action: PayloadAction<UnparsingItem[]>) {
+    updateUnparsingCart(state, action: PayloadAction<IUnparsingItem[]>) {
       state.unparsingCart = action.payload;
     },
-    addToUnparcingCart(state, action: PayloadAction<ProductItem>) {
+    addToUnparcingCart(state, action: PayloadAction<IProductItem>) {
       const searchItem = state.unparsingCart.find((item) => item.product.id === action.payload.id);
 
       if (searchItem === undefined) {
-        const tempitem: UnparsingItem = {
+        const tempitem: IUnparsingItem = {
           product: Object.assign({}, action.payload),
           count: 1,
         };

@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-interface State {
+interface IStateInitial {
   isHideProfile: boolean;
   isHideCart: boolean;
 }
 
-const initialStateValue: State = {
+const initialStateValue: IStateInitial = {
   isHideProfile: true,
   isHideCart: true,
 };

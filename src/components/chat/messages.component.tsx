@@ -3,11 +3,11 @@ import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { deleteMessage } from "../../store/slices/chat/profile.slice";
 
 const MessagesComponent = () => {
-  const messages = useAppSelector((state) => state.chat.profile.messages);
-  const uid = useAppSelector((state) => state.auth.user.uid);
-  const currentChat = useAppSelector((state) => state.chat.profile.currentChat);
-
   const dispatch = useAppDispatch();
+
+  const uid = useAppSelector((state) => state.auth.user.uid);
+
+  const { currentChat, messages } = useAppSelector((state) => state.chat.profile);
 
   const isEmptyMessages = messages.length < 1;
   const isEmptyCurrentChat = !currentChat;

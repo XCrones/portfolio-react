@@ -1,36 +1,24 @@
 import React, { useEffect, useState } from "react";
 import usePaginator from "../../hooks/paginator";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { builderNeonText } from "../../store/slices/shadow.slice";
 import { slicePrice, sliceString } from "../../store/slices/shop/cart.slice";
 import { showCart, showProfile } from "../../store/slices/shop/header.slice";
 import { buy, decrementItem, deleteItem, incrementItem, updateProfile } from "../../store/slices/shop/profile.slice";
-import textShadow, { ITextShadow } from "../ui/textShadow";
 
 const CartComponent = () => {
-  const styleShadowMedium = useAppSelector((state) => state.appCommon.shadow.stylesShadow.medium);
+  const dispatch = useAppDispatch();
+
   const isNeon = useAppSelector((state) => state.appCommon.neon.value);
+  const shadowLight = useAppSelector((state) => state.appCommon.shadow.stylesShadow.light);
+
   const { unparsingCart: cart } = useAppSelector((state) => state.shop.cart);
   const isLoadData = useAppSelector((state) => state.shop.profile.isLoad.cart);
 
-  const [hoverBtnClose, setHoverBtnClose] = useState(false);
   const [titleLength, setTitleLength] = useState(30);
 
   const { currentData, pages, isCurrentPage, jumpPage } = usePaginator(4, cart);
   const makePathImgLoad = (name: string): string => require(`../../assets/img/${name}.svg`);
-
-  const dispatch = useAppDispatch();
-
-  const defaultSettingNeon = (color: string, isHover: boolean): ITextShadow => {
-    return {
-      activeHover: true,
-      color: color,
-      colorShadow: color,
-      isHover: isHover,
-      isNeon: isNeon,
-      isSetColor: true,
-      styleShadow: styleShadowMedium,
-    };
-  };
 
   const totalPrice = (): number => {
     if (cart.length > 0) {
@@ -79,9 +67,14 @@ const CartComponent = () => {
         <h3 className="flex-auto flex justify-center capitalize text-lg">корзина</h3>
         <button
           onClick={() => dispatch(showCart())}
-          onMouseEnter={() => setHoverBtnClose(true)}
-          onMouseLeave={() => setHoverBtnClose(false)}
-          style={textShadow(defaultSettingNeon("#fff", hoverBtnClose))}
+          onMouseEnter={(event) => {
+            const neonText = builderNeonText(shadowLight, "#fff", true, isNeon);
+            event.currentTarget.style.textShadow = neonText.textShadow;
+            event.currentTarget.style.color = neonText.color;
+          }}
+          onMouseLeave={(event) => {
+            event.currentTarget.style.textShadow = "";
+          }}
           type="button"
           className="btn-close text-xl transition-all duration-300"
         >
@@ -119,6 +112,14 @@ const CartComponent = () => {
                 <div className="flex-auto flex flex-row items-center">
                   <button
                     onClick={() => decrement(item.product.id)}
+                    onMouseEnter={(event) => {
+                      const neonText = builderNeonText(shadowLight, "#dc2626", true, isNeon);
+                      event.currentTarget.style.textShadow = neonText.textShadow;
+                      event.currentTarget.style.color = neonText.color;
+                    }}
+                    onMouseLeave={(event) => {
+                      event.currentTarget.style.textShadow = "";
+                    }}
                     type="button"
                     className="btn-decr text-red-600 text-lg transition-all duration-300"
                   >
@@ -129,6 +130,14 @@ const CartComponent = () => {
                   </div>
                   <button
                     onClick={() => increment(item.product.id)}
+                    onMouseEnter={(event) => {
+                      const neonText = builderNeonText(shadowLight, "#16a34a", true, isNeon);
+                      event.currentTarget.style.textShadow = neonText.textShadow;
+                      event.currentTarget.style.color = neonText.color;
+                    }}
+                    onMouseLeave={(event) => {
+                      event.currentTarget.style.textShadow = "";
+                    }}
                     type="button"
                     className="btn-incr text-green-600 text-lg transition-all duration-300"
                   >
@@ -143,6 +152,14 @@ const CartComponent = () => {
             <div className="">
               <button
                 onClick={() => dispatch(deleteItem(item.product.id))}
+                onMouseEnter={(event) => {
+                  const neonText = builderNeonText(shadowLight, "#991b1b", true, isNeon);
+                  event.currentTarget.style.textShadow = neonText.textShadow;
+                  event.currentTarget.style.color = neonText.color;
+                }}
+                onMouseLeave={(event) => {
+                  event.currentTarget.style.textShadow = "";
+                }}
                 type="button"
                 className="btn-delete text-red-800 text-2xl transition-all duration-300"
               >

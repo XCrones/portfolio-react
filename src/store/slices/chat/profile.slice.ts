@@ -3,19 +3,19 @@ import { arrayRemove, arrayUnion, doc, getDoc, onSnapshot, setDoc, Unsubscribe, 
 import { RootState } from "../..";
 import { dataBase } from "../../../firebase";
 
-export interface MessageItem {
+export interface IMessageItem {
   uid: string;
   name: string;
   message: string;
   date: string;
 }
 
-interface FiedDb {
+interface IFiedDb {
   fieldChats: "chats";
   fieldMessages: "messages";
 }
 
-interface InitialState {
+interface IStateInitial {
   isLoad: {
     addCreate: boolean;
     profile: boolean;
@@ -25,14 +25,14 @@ interface InitialState {
     join: boolean;
   };
   response: string;
-  messages: MessageItem[];
+  messages: IMessageItem[];
   currentChat: string | undefined;
   chatList: string[];
   collection: {
     collUsers: "chat-users";
     collChats: "chats";
   };
-  fieldsDb: FiedDb;
+  fieldsDb: IFiedDb;
   isChatJoin: boolean;
 }
 
@@ -129,8 +129,10 @@ export const createChat = createAsyncThunk<
 >("profile/createChat", async function (chatName, { dispatch, getState, fulfillWithValue, rejectWithValue }) {
   const isAuth = getState().auth.isAuth;
 
+  const replaceChatName = chatName.toLowerCase().trim();
+
   if (isAuth) {
-    if (!chatName) {
+    if (!replaceChatName) {
       return rejectWithValue("chat name is empty");
     }
 
@@ -139,9 +141,9 @@ export const createChat = createAsyncThunk<
     const collectionChats = getState().chat.profile.collection.collChats;
     const fieildChat = getState().chat.profile.fieldsDb.fieldMessages;
 
-    let tempMessages: MessageItem[] = [];
+    let tempMessages: IMessageItem[] = [];
 
-    const result = await tryCreateChat(chatName, collectionChats);
+    const result = await tryCreateChat(replaceChatName, collectionChats);
 
     if (!result) {
       return rejectWithValue("имя чата занято");
@@ -150,14 +152,14 @@ export const createChat = createAsyncThunk<
     unsubMessages();
     dispatch(clearMessages());
 
-    await addUserToChat(chatName, collectionUsers, uid);
+    await addUserToChat(replaceChatName, collectionUsers, uid);
 
     const getMessages = async (): Promise<boolean> => {
-      await checkFieldsChat(chatName, collectionChats, fieildChat);
+      await checkFieldsChat(replaceChatName, collectionChats, fieildChat);
 
       try {
         return new Promise((resolve) => {
-          messagesRef = onSnapshot(doc(dataBase, collectionChats, chatName), (doc: any) => {
+          messagesRef = onSnapshot(doc(dataBase, collectionChats, replaceChatName), (doc: any) => {
             if (!!doc.data()) {
               tempMessages = doc.data()[fieildChat] || [];
               dispatch(setMessages(tempMessages));
@@ -176,7 +178,7 @@ export const createChat = createAsyncThunk<
       return rejectWithValue("error");
     }
 
-    return fulfillWithValue(chatName);
+    return fulfillWithValue(replaceChatName);
   }
   return rejectWithValue("no auth");
 });
@@ -190,18 +192,20 @@ export const joinChat = createAsyncThunk<
 
   const currentChat = getState().chat.profile.currentChat;
 
-  if (!!currentChat && currentChat === chatName) {
+  const replaceChatName = chatName.toLowerCase().trim();
+
+  if (!!currentChat && currentChat === replaceChatName) {
     unsubMessages();
     dispatch(clearMessages());
     return rejectWithValue(undefined);
   }
 
-  if (!chatName) {
+  if (!replaceChatName) {
     return rejectWithValue(undefined);
   }
 
   if (isAuth) {
-    if (!chatName) {
+    if (!replaceChatName) {
       return rejectWithValue("chat name is empty");
     }
 
@@ -212,9 +216,9 @@ export const joinChat = createAsyncThunk<
 
     const fieildChat = getState().chat.profile.fieldsDb.fieldMessages;
 
-    let tempMessages: MessageItem[] = [];
+    let tempMessages: IMessageItem[] = [];
 
-    const resultJoin = await tryJoinChat(chatName, collectionChats);
+    const resultJoin = await tryJoinChat(replaceChatName, collectionChats);
 
     if (!resultJoin) {
       return rejectWithValue("чата не существует");
@@ -223,14 +227,14 @@ export const joinChat = createAsyncThunk<
     unsubMessages();
     dispatch(clearMessages());
 
-    await addUserToChat(chatName, collectionUsers, uid);
+    await addUserToChat(replaceChatName, collectionUsers, uid);
 
     const getMessages = async (): Promise<boolean> => {
-      await checkFieldsChat(chatName, collectionChats, fieildChat);
+      await checkFieldsChat(replaceChatName, collectionChats, fieildChat);
 
       try {
         return new Promise((resolve) => {
-          messagesRef = onSnapshot(doc(dataBase, collectionChats, chatName), (doc: any) => {
+          messagesRef = onSnapshot(doc(dataBase, collectionChats, replaceChatName), (doc: any) => {
             if (!!doc.data()) {
               tempMessages = doc.data()[fieildChat] || [];
               dispatch(setMessages(tempMessages));
@@ -249,7 +253,7 @@ export const joinChat = createAsyncThunk<
       return rejectWithValue("error");
     }
 
-    return fulfillWithValue(chatName);
+    return fulfillWithValue(replaceChatName);
   }
 
   return rejectWithValue("no auth");
@@ -336,8 +340,10 @@ export const outChat = createAsyncThunk<
   const isAuth = getState().auth.isAuth;
   const uid = getState().auth.user.uid;
 
+  const replaceChatName = chatName.toLowerCase().trim();
+
   if (isAuth && !!uid) {
-    if (!chatName) {
+    if (!replaceChatName) {
       return rejectWithValue("chat name is empty");
     }
 
@@ -347,7 +353,7 @@ export const outChat = createAsyncThunk<
 
     try {
       await updateDoc(db, {
-        chats: arrayRemove(chatName),
+        chats: arrayRemove(replaceChatName),
       });
     } catch (e) {
       return rejectWithValue("err out chat");
@@ -393,7 +399,7 @@ export const pushMessage = createAsyncThunk<
       ":" +
       new Date().getMilliseconds();
 
-    const itemMessage: MessageItem = {
+    const itemMessage: IMessageItem = {
       uid: uid,
       name: userName,
       message: message,
@@ -418,7 +424,7 @@ export const pushMessage = createAsyncThunk<
 
 export const deleteMessage = createAsyncThunk<
   string,
-  MessageItem,
+  IMessageItem,
   { dispatch: Dispatch; state: RootState; rejectValue: string; fullFilled: string }
 >("profile/deleteMessage", async function (message, { getState, fulfillWithValue, rejectWithValue }) {
   const isAuth = getState().auth.isAuth;
@@ -452,7 +458,7 @@ export const deleteMessage = createAsyncThunk<
   return rejectWithValue("no auth");
 });
 
-const initialStateValue: InitialState = {
+const initialStateValue: IStateInitial = {
   isLoad: {
     addCreate: false,
     profile: false,
@@ -511,7 +517,7 @@ export const ProfileSlice = createSlice({
       state.chatList = [...action.payload];
     },
 
-    setMessages(state, action: PayloadAction<MessageItem[]>) {
+    setMessages(state, action: PayloadAction<IMessageItem[]>) {
       state.messages = [...action.payload];
     },
   },

@@ -10,30 +10,40 @@ import {
   showCreateChat,
   showJoinChat,
 } from "../../store/slices/chat/profile.slice";
-import textShadow, { ITextShadow } from "../ui/textShadow";
+import { builderNeonText } from "../../store/slices/shadow.slice";
 import MessagesComponent from "./messages.component";
 import style from "./room.module.scss";
 
-interface textAreaLength {
+interface ILengthTextArea {
   max: number;
   min: number;
   rows: number;
 }
 
 const RoomComponent = () => {
-  const userName = useAppSelector((state) => state.auth.user.userName);
-  const chatList = useAppSelector((state) => state.chat.profile.chatList);
-  const currentChat = useAppSelector((state) => state.chat.profile.currentChat);
-  const isLoadAddCreate = useAppSelector((state) => state.chat.profile.isLoad.addCreate);
-  const isLoadProfile = useAppSelector((state) => state.chat.profile.isLoad.profile);
-  const isNeon = useAppSelector((state) => state.appCommon.neon.value);
-  const styleShadowLight = useAppSelector((state) => state.appCommon.shadow.stylesShadow.light);
-  const messages = useAppSelector((state) => state.chat.profile.messages);
-
   const dispatch = useAppDispatch();
 
+  const isNeon = useAppSelector((state) => state.appCommon.neon.value);
+  const userName = useAppSelector((state) => state.auth.user.userName);
+  const shadowLight = useAppSelector((state) => state.appCommon.shadow.stylesShadow.light);
+
+  const {
+    chatList,
+    currentChat,
+    isLoad: { addCreate: isLoadAddCreate, profile: isLoadProfile },
+    messages,
+  } = useAppSelector((state) => state.chat.profile);
+
+  const textAreaLength: ILengthTextArea = {
+    max: 200,
+    min: 1,
+    rows: 1,
+  };
+
+  const isEmptyChatList = chatList.length < 1;
+  const isEmptyCurrentChat = !currentChat;
+
   const [isHideProfile, setHideProfile] = useState(true);
-  const [isHoverBtn, setIsHoverBtn] = useState(false);
 
   const {
     reset,
@@ -47,27 +57,8 @@ const RoomComponent = () => {
 
   const toggleProfile = () => setHideProfile(!isHideProfile);
 
-  const isEmptyChatList = chatList.length < 1;
-  const isEmptyCurrentChat = !currentChat;
-
   const makePathImgLoad = (name: string): string => require(`../../assets/img/${name}.svg`);
   const makePathImgIcon = (name: string): string => require(`../../assets/img/chat/${name}.png`);
-
-  const textNeonBtn: ITextShadow = {
-    color: "#fff",
-    colorShadow: "#fff",
-    isNeon: isNeon,
-    isSetColor: true,
-    styleShadow: styleShadowLight,
-    activeHover: true,
-    isHover: isHoverBtn,
-  };
-
-  const textAreaLength: textAreaLength = {
-    max: 200,
-    min: 1,
-    rows: 1,
-  };
 
   const onSubmit = () => {
     if (isValid) {
@@ -249,9 +240,14 @@ const RoomComponent = () => {
         </div>
         <button
           disabled={isEmptyCurrentChat}
-          onMouseEnter={() => setIsHoverBtn(true)}
-          onMouseLeave={() => setIsHoverBtn(false)}
-          style={textShadow(textNeonBtn)}
+          onMouseEnter={(event) => {
+            const neonText = builderNeonText(shadowLight, "#fff", true, isNeon);
+            event.currentTarget.style.textShadow = neonText.textShadow;
+            event.currentTarget.style.color = neonText.color;
+          }}
+          onMouseLeave={(event) => {
+            event.currentTarget.style.textShadow = "";
+          }}
           className={`btn-submit text-2xl transition-all duration-300 ${isEmptyCurrentChat ? "text-slate-400" : ""}`}
           type="submit"
         >

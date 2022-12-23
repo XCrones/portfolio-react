@@ -2,26 +2,39 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { clearResponse, createChat, hideJoinCreate, joinChat } from "../../store/slices/chat/profile.slice";
-import LoadComponent, { MetaLoad } from "../load/Load.component";
+import LoadComponent, { IMetaLoad } from "../load/load.component";
 
-export interface AddCreateProps {
+export interface IPropsAddCreate {
   name: string;
-  input: InputLength;
+  input: ILengthInput;
   isCreate: boolean;
 }
 
-export interface InputLength {
+export interface ILengthInput {
   max: number;
   min: number;
 }
 
-const AddCreateComponent = ({ input, name, isCreate }: AddCreateProps) => {
-  const styleShadowMedium = useAppSelector((state) => state.appCommon.shadow.stylesShadow.medium);
-  const isLoad = useAppSelector((state) => state.chat.profile.isLoad.addCreate);
-  const responseErr = useAppSelector((state) => state.chat.profile.response);
-  const currentChat = useAppSelector((state) => state.chat.profile.currentChat);
-
+const AddCreateComponent = ({ input, name, isCreate }: IPropsAddCreate) => {
   const dispatch = useAppDispatch();
+
+  const styleShadowMedium = useAppSelector((state) => state.appCommon.shadow.stylesShadow.medium);
+
+  const {
+    isLoad: { addCreate: isLoadAddCreate },
+    response: responseErr,
+    currentChat,
+  } = useAppSelector((state) => state.chat.profile);
+
+  const load: IMetaLoad[] = [
+    { color: "#ff0000", style: styleShadowMedium, hover: false },
+    { color: "#008000", style: styleShadowMedium, hover: false },
+    { color: "#0000ff", style: styleShadowMedium, hover: false },
+  ];
+
+  const isResponse = responseErr.length > 0;
+  const isJoinResponse = responseErr.includes("занято");
+  const isCreateResponse = responseErr.includes("не существует");
 
   const {
     reset,
@@ -34,26 +47,6 @@ const AddCreateComponent = ({ input, name, isCreate }: AddCreateProps) => {
   });
 
   const getError = (field: string) => (errors[field]?.message as string) || "Error!";
-  const isResponse = responseErr.length > 0;
-
-  const load: MetaLoad[] = [
-    { color: "#ff0000", style: styleShadowMedium, hover: false },
-    { color: "#008000", style: styleShadowMedium, hover: false },
-    { color: "#0000ff", style: styleShadowMedium, hover: false },
-  ];
-
-  const isJoinResponse: boolean = responseErr.includes("занято");
-  const isCreateResponse: boolean = responseErr.includes("не существует");
-
-  const onSubmit = () => {
-    if (isValid) {
-      if (isCreate) {
-        create();
-      } else {
-        join();
-      }
-    }
-  };
 
   const create = () => {
     if (isValid) {
@@ -69,6 +62,16 @@ const AddCreateComponent = ({ input, name, isCreate }: AddCreateProps) => {
     }
   };
 
+  const onSubmit = () => {
+    if (isValid) {
+      if (isCreate) {
+        create();
+      } else {
+        join();
+      }
+    }
+  };
+
   useEffect(() => {
     if (currentChat !== undefined) {
       reset();
@@ -77,7 +80,7 @@ const AddCreateComponent = ({ input, name, isCreate }: AddCreateProps) => {
 
   return (
     <form className="h-full w-full flex flex-col justify-center gap-y-3 p-2 relative" onSubmit={handleSubmit(onSubmit)}>
-      {isLoad && (
+      {isLoadAddCreate && (
         <div className="absolute top-0 left-0 h-full w-full bg-[#bdb5b556] overflow-hidden">
           <LoadComponent meta={load} />
         </div>
