@@ -1,0 +1,49 @@
+@import "../../styles/variables";
+
+.project {
+  &:hover {
+    .project__title {
+      opacity: 0;
+    }
+    .project__items {
+      scale: 1;
+      opacity: 1;
+    }
+  }
+
+  &__title {
+  }
+
+  &__items {
+    scale: 0;
+    opacity: 0;
+  }
+}
+
+.fonts {
+  font-family: "Fjalla One", sans-serif;
+}
+
+.flicker {
+  animation: flicker 3.8s infinite alternate;
+}
+
+@keyframes flicker {
+  0%,
+  18%,
+  22%,
+  25%,
+  53%,
+  57%,
+  100% {
+    @include neon-shadow-text-light($color-red-neon);
+    color: $color-red-neon;
+  }
+
+  20%,
+  80%,
+  55% {
+    text-shadow: none;
+    color: #fff;
+  }
+}
