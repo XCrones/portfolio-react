@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import usePaginator from "../../hooks/paginator";
 import { useAppSelector } from "../../hooks/redux";
-import style from "./home.page.module.scss";
 import { builderNeonText } from "../../store/slices/shadow.slice";
+import style from "./Home.module.scss";
 
 const HomePage = () => {
   const isNeon = useAppSelector((state) => state.appCommon.neon.value);

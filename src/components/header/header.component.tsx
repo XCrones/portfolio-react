@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { toggleNeon } from "../../store/slices/neon.slice";
 import { builderNeonBox, builderNeonText } from "../../store/slices/shadow.slice";
-import style from "./header.module.scss";
-import NavigationComponent from "./navigation.component";
+import NavigationComponent from "./Navigation.component";
 import { IProjectItem, URL_FRAMEWORKS } from "../../env";
+import style from "./Header.module.scss";
 
 const HeaderComponent = () => {
   const dispatch = useAppDispatch();

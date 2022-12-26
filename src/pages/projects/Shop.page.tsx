@@ -1,16 +1,16 @@
 import React, { useEffect } from "react";
-import PopupComponent from "../../../components/shop/popup.component";
-import ProductsComponent from "../../../components/shop/products.component";
-import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
-import { setHideHeader } from "../../../store/slices/header.slice";
-import { toggleHideProjects } from "../../../store/slices/projects.slice";
-import InfoProject from "../../../components/about-project/about-project.component";
-import HeaderComponent from "../../../components/shop/header.component";
-import ProjectMenuComponent, { IPropsMenuProject } from "../../../components/project-menu/project-menu.component";
-import { tryUser } from "../../../store/slices/auth.slice";
-import { tryProfile } from "../../../store/slices/shop/profile.slice";
-import { URL_GIT_PROJECTS } from "../../../env";
-import { ROUTER_LINKS } from "../../../router-links";
+import PopupComponent from "../../components/shop/Popup.component";
+import ProductsComponent from "../../components/shop/Products.component";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { setHideHeader } from "../../store/slices/header.slice";
+import { toggleHideProjects } from "../../store/slices/projects.slice";
+import InfoProject from "../../components/about-project/AboutProject.component";
+import HeaderComponent from "../../components/shop/Header.component";
+import ProjectMenuComponent, { IPropsMenuProject } from "../../components/project-menu/ProjectMenu.component";
+import { tryUser } from "../../store/slices/auth.slice";
+import { tryProfile } from "../../store/slices/shop/profile.slice";
+import { URL_GIT_PROJECTS } from "../../env";
+import { ROUTER_LINKS } from "../../router-links";
 
 const ShopPage = () => {
   const dispatch = useAppDispatch();

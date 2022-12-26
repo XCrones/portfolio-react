@@ -1,16 +1,16 @@
 import React, { useEffect } from "react";
-import ProjectMenuComponent, { IPropsMenuProject } from "../../../components/project-menu/project-menu.component";
-import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
-import { setHideHeader } from "../../../store/slices/header.slice";
-import { toggleHideProjects } from "../../../store/slices/projects.slice";
-import InfoProject from "../../../components/about-project/about-project.component";
-import RoomComponent from "../../../components/chat/room.component";
-import AuthComponent from "../../../components/auth/auth.component";
-import AddCreateComponent, { IPropsAddCreate, ILengthInput } from "../../../components/chat/add-create.component";
-import { hideJoinCreate, tryProfile } from "../../../store/slices/chat/profile.slice";
-import { tryUser } from "../../../store/slices/auth.slice";
-import { URL_GIT_PROJECTS } from "../../../env";
-import { ROUTER_LINKS } from "../../../router-links";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { setHideHeader } from "../../store/slices/header.slice";
+import { toggleHideProjects } from "../../store/slices/projects.slice";
+import { hideJoinCreate, tryProfile } from "../../store/slices/chat/profile.slice";
+import { tryUser } from "../../store/slices/auth.slice";
+import { URL_GIT_PROJECTS } from "../../env";
+import { ROUTER_LINKS } from "../../router-links";
+import ProjectMenuComponent, { IPropsMenuProject } from "../../components/project-menu/ProjectMenu.component";
+import AddCreateComponent, { IPropsAddCreate, ILengthInput } from "../../components/chat/AddCreate.component";
+import InfoProject from "../../components/about-project/AboutProject.component";
+import RoomComponent from "../../components/chat/Room.component";
+import AuthComponent from "../../components/auth/Auth.component";
 
 const ChatPage = () => {
   const dispatch = useAppDispatch();
@@ -54,7 +54,7 @@ const ChatPage = () => {
   };
 
   const isHideComponent = (isHide: boolean) => (isHide ? "opacity-0 scale-0" : "opacity-1 scale-1");
-  const makePathImgLoad = (name: string): string => require(`../../../assets/img/${name}.svg`);
+  const makePathImgLoad = (name: string): string => require(`../../assets/img/${name}.svg`);
 
   useEffect(() => {
     if (isAuth) {

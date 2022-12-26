@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { ITasks, sortItems, toggleComplete } from "../../store/slices/todo/list.slice";
 import { IShowModal, showModal } from "../../store/slices/todo/modal.slice";
-import style from "./table.module.scss";
+import style from "./Table.module.scss";
 interface IThead {
   title: string;
   filter: string;

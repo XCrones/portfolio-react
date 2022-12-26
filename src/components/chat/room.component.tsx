@@ -11,8 +11,8 @@ import {
   showJoinChat,
 } from "../../store/slices/chat/profile.slice";
 import { builderNeonText } from "../../store/slices/shadow.slice";
-import MessagesComponent from "./messages.component";
-import style from "./room.module.scss";
+import MessagesComponent from "./Messages.component";
+import style from "./Room.module.scss";
 
 interface ILengthTextArea {
   max: number;

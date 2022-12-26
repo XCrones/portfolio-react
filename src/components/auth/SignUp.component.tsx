@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { userSignUp, IUserData } from "../../store/slices/auth.slice";
 import { builderNeonText } from "../../store/slices/shadow.slice";
-import { ISign } from "./auth.component";
+import { ISign } from "./Auth.component";
 
 const SignUpComponent = ({ closeProfile, isHideClose, toggleForm, input }: ISign) => {
   const dispatch = useAppDispatch();

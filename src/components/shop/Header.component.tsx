@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { showCart, showProfile } from "../../store/slices/shop/header.slice";
-import CartComponent from "./cart.component";
+import CartComponent from "./Cart.component";
 
-import style from "./header.module.scss";
-import ProfileComponent from "./profile.component";
-import ToolsComponent from "./tools.component";
+import style from "./Header.module.scss";
+import ProfileComponent from "./Profile.component";
+import ToolsComponent from "./Tools.component";
 
 const HeaderComponent = () => {
   const dispatch = useAppDispatch();

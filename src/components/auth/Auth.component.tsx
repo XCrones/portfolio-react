@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useAppSelector } from "../../hooks/redux";
-import LoadComponent, { IMetaLoad } from "../load/load.component";
-import SignInComponent from "./signIn.component";
-import SignUpComponent from "./signUp.component";
+import LoadComponent, { IMetaLoad } from "../load/Load.component";
+import SignInComponent from "./SignIn.component";
+import SignUpComponent from "./SignUp.component";
 
 interface ILengthInput {
   max: number;

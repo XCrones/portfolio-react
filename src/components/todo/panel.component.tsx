@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { builderNeonBox } from "../../store/slices/shadow.slice";
 import { completeAll, ITasks, setAll } from "../../store/slices/todo/list.slice";
 import { IShowModal, showModal } from "../../store/slices/todo/modal.slice";
-import style from "./panel.module.scss";
+import style from "./Panel.module.scss";
 
 const PanelComponent = () => {
   const dispatch = useAppDispatch();

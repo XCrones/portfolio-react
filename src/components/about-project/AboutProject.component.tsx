@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { toggleHideAboutProject } from "../../store/slices/about-projects.slice";
+import { toggleHideAboutProject } from "../../store/slices/aboutProjects.slice";
 import { builderNeonText } from "../../store/slices/shadow.slice";
-import style from "./about-project.module.scss";
+import style from "./AboutProject.module.scss";
 
 export interface IAboutProject {
   title?: string;

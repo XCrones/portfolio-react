@@ -5,7 +5,7 @@ import { slicePrice, sliceString } from "../../store/slices/shop/cart.slice";
 import { showPoup } from "../../store/slices/shop/popup.slice";
 import { calcRate, filterBy, IProductItem } from "../../store/slices/shop/products.slice";
 import { addToCart } from "../../store/slices/shop/profile.slice";
-import style from "./products.module.scss";
+import style from "./Products.module.scss";
 
 const ProductsComponent = () => {
   const dispatch = useAppDispatch();

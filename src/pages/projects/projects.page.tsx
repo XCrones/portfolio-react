@@ -2,7 +2,7 @@ import React from "react";
 import { Link, Outlet } from "react-router-dom";
 import { useAppSelector } from "../../hooks/redux";
 import { ROUTER_LINKS } from "../../router-links";
-import style from "./projects.page.module.scss";
+import style from "./Projects.module.scss";
 
 const ProjectsPage = () => {
   const isHideLinks = useAppSelector((state) => state.appCommon.projects.isHide);

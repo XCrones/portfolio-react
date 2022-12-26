@@ -2,10 +2,10 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { ROUTER_LINKS } from "../../router-links";
-import { toggleHideAboutProject } from "../../store/slices/about-projects.slice";
+import { toggleHideAboutProject } from "../../store/slices/aboutProjects.slice";
 import { toggleHideHeader } from "../../store/slices/header.slice";
 import { builderNeonBox, builderNeonText } from "../../store/slices/shadow.slice";
-import style from "./project-menu.module.scss";
+import style from "./ProjectMenu.module.scss";
 
 export interface IPropsMenuProject {
   link: string;

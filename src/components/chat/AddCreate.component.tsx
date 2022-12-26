@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { clearResponse, createChat, hideJoinCreate, joinChat } from "../../store/slices/chat/profile.slice";
-import LoadComponent, { IMetaLoad } from "../load/load.component";
+import LoadComponent, { IMetaLoad } from "../load/Load.component";
 
 export interface IPropsAddCreate {
   name: string;

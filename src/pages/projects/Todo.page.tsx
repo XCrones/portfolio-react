@@ -1,15 +1,15 @@
 import React, { useEffect } from "react";
-import InfoProject from "../../../components/about-project/about-project.component";
-import ProjectMenuComponent, { IPropsMenuProject } from "../../../components/project-menu/project-menu.component";
-import ModalComponent from "../../../components/todo/modal.component";
-import PanelComponent from "../../../components/todo/panel.component";
-import PopupComponent from "../../../components/todo/popup.component";
-import TableComponent from "../../../components/todo/table.component";
-import { URL_GIT_PROJECTS } from "../../../env";
-import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
-import { ROUTER_LINKS } from "../../../router-links";
-import { setHideHeader } from "../../../store/slices/header.slice";
-import { toggleHideProjects } from "../../../store/slices/projects.slice";
+import InfoProject from "../../components/about-project/AboutProject.component";
+import ProjectMenuComponent, { IPropsMenuProject } from "../../components/project-menu/ProjectMenu.component";
+import ModalComponent from "../../components/todo/Modal.component";
+import PanelComponent from "../../components/todo/Panel.component";
+import PopupComponent from "../../components/todo/Popup.component";
+import TableComponent from "../../components/todo/Table.component";
+import { URL_GIT_PROJECTS } from "../../env";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { ROUTER_LINKS } from "../../router-links";
+import { setHideHeader } from "../../store/slices/header.slice";
+import { toggleHideProjects } from "../../store/slices/projects.slice";
 
 const TodoPage = () => {
   const dispatch = useAppDispatch();

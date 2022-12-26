@@ -7,8 +7,8 @@ import { slicePrice } from "../../store/slices/shop/cart.slice";
 import { showProfile } from "../../store/slices/shop/header.slice";
 import { profileSignOut, IPurchaseItem } from "../../store/slices/shop/profile.slice";
 import { openPurchase } from "../../store/slices/shop/purchase.slice";
-import AuthComponent from "../auth/auth.component";
-import PurchaseComponent from "./purchase.component";
+import AuthComponent from "../auth/Auth.component";
+import PurchaseComponent from "./Purchase.component";
 
 const ProfileComponent = () => {
   const dispatch = useAppDispatch();

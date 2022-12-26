@@ -7,7 +7,7 @@ import shadowSlice from "./slices/shadow.slice";
 import aboutMeSlice from "./slices/about-me.slice";
 import ProjectsSlice from "./slices/projects.slice";
 import headerSlice from "./slices/header.slice";
-import aboutProjectSlice from "./slices/about-projects.slice";
+import aboutProjectSlice from "./slices/aboutProjects.slice";
 import todoModalSlice from "./slices/todo/modal.slice";
 import todoPopupSlice from "./slices/todo/popup.slice";
 import shopPopupSlice from "./slices/shop/popup.slice";
