@@ -12,6 +12,7 @@ import FooterComponent from "./components/footer/Footer.component";
 import { useAppSelector } from "./hooks/redux";
 import { builderNeonBox } from "./store/slices/shadow.slice";
 import { ROUTER_LINKS } from "./router-links";
+import NotFoundPage from "./pages/not-found/NotFound.page";
 
 const App = () => {
   const isHeader = useAppSelector((state) => state.header.isHide);
@@ -41,6 +42,7 @@ const App = () => {
               <Route path={ROUTER_LINKS.projects.children.chat.link} element={<ChatPage />} />
             </Route>
             <Route path={ROUTER_LINKS.contacts.link} element={<ContactsPage />} />
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </div>
       </main>

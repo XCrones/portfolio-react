@@ -1,0 +1,25 @@
+@import "../../styles/_variables";
+
+.text-neon-flicker {
+  animation: text-neon-flicker 3s infinite alternate;
+}
+
+@keyframes text-neon-flicker {
+  0%,
+  18%,
+  22%,
+  53%,
+  100% {
+    @include neon-shadow-text-medium($color-red-shadow);
+    color: $color-red-neon;
+  }
+
+  20%,
+  25%,
+  80%,
+  55%,
+  57% {
+    color: #fff;
+    text-shadow: none;
+  }
+}
