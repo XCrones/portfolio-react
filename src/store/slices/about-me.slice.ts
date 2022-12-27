@@ -70,7 +70,7 @@ const initialStateValue: IStateInitial = {
       about: ["RxJs", "DI", "Animations"],
     },
     {
-      title: "хорошее знание Tailwind",
+      title: "хорошее знание Tailwind css",
       img: "tailwind",
       about: ["Breakpoints", "Flexbox/Grid", "Transitions/Animation"],
     },

@@ -26,7 +26,6 @@ interface IContacts {
 interface IFrameworks {
   react: IProjectItem;
   angular: IProjectItem;
-  vue: IProjectItem;
 }
 
 export const URL_FRAMEWORKS: IFrameworks = {
@@ -37,10 +36,6 @@ export const URL_FRAMEWORKS: IFrameworks = {
   react: {
     title: "react",
     link: "https://anydea-react.web.app",
-  },
-  vue: {
-    title: "vue",
-    link: "https://anydea-vue.web.app/",
   },
 };
 
