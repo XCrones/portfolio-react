@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { CONTACT_LINKS } from "../../env";
+import { CONTACT_LINKS } from "../../environment";
 import { useAppSelector } from "../../hooks/redux";
 import { builderNeonBox } from "../../store/slices/shadow.slice";
 

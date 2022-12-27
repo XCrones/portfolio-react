@@ -4,7 +4,7 @@ import { setHideHeader } from "../../store/slices/header.slice";
 import { toggleHideProjects } from "../../store/slices/projects.slice";
 import { hideJoinCreate, tryProfile } from "../../store/slices/chat/profile.slice";
 import { tryUser } from "../../store/slices/auth.slice";
-import { URL_GIT_PROJECTS } from "../../env";
+import { URL_GIT_PROJECTS } from "../../environment";
 import { ROUTER_LINKS } from "../../router-links";
 import ProjectMenuComponent, { IPropsMenuProject } from "../../components/project-menu/ProjectMenu.component";
 import AddCreateComponent, { IPropsAddCreate, ILengthInput } from "../../components/chat/AddCreate.component";

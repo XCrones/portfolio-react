@@ -9,7 +9,7 @@ import HeaderComponent from "../../components/shop/Header.component";
 import ProjectMenuComponent, { IPropsMenuProject } from "../../components/project-menu/ProjectMenu.component";
 import { tryUser } from "../../store/slices/auth.slice";
 import { tryProfile } from "../../store/slices/shop/profile.slice";
-import { URL_GIT_PROJECTS } from "../../env";
+import { URL_GIT_PROJECTS } from "../../environment";
 import { ROUTER_LINKS } from "../../router-links";
 
 const ShopPage = () => {

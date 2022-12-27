@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { toggleNeon } from "../../store/slices/neon.slice";
 import { builderNeonBox, builderNeonText } from "../../store/slices/shadow.slice";
 import NavigationComponent from "./Navigation.component";
-import { IProjectItem, URL_FRAMEWORKS } from "../../env";
+import { IProjectItem, URL_FRAMEWORKS } from "../../environment";
 import style from "./Header.module.scss";
 
 const HeaderComponent = () => {

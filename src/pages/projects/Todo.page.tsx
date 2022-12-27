@@ -5,7 +5,7 @@ import ModalComponent from "../../components/todo/Modal.component";
 import PanelComponent from "../../components/todo/Panel.component";
 import PopupComponent from "../../components/todo/Popup.component";
 import TableComponent from "../../components/todo/Table.component";
-import { URL_GIT_PROJECTS } from "../../env";
+import { URL_GIT_PROJECTS } from "../../environment";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { ROUTER_LINKS } from "../../router-links";
 import { setHideHeader } from "../../store/slices/header.slice";
