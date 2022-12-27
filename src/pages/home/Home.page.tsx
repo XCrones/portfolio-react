@@ -30,7 +30,7 @@ const HomePage = () => {
 
   return (
     <div className="text-white py-[15px] px-[5px] flex flex-col h-full w-full">
-      <h1 className={`${style.title} uppercase text-center text-[35px] md:text-[45px] leading-[40px] py-title`}>
+      <h1 className={`${style.title} uppercase text-center text-[35px] md:text-[45px] leading-[40px] py-title py-7`}>
         {aboutMe.title} &nbsp;
         <span
           style={builderNeonText(shadowLight, blueShadow, true, isNeon)}
