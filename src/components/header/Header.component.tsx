@@ -31,8 +31,6 @@ const HeaderComponent = () => {
         return blueNeon;
       case URL_FRAMEWORKS.angular.title:
         return redNeon;
-      case URL_FRAMEWORKS.vue.title:
-        return greenNeon;
       default:
         return "";
     }
