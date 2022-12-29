@@ -1,5 +1,4 @@
 import React from "react";
-import style from "./App.module.scss";
 import { Route, Routes } from "react-router-dom";
 import HomePage from "./pages/home/Home.page";
 import ProjectPage from "./pages/projects/Projects.page";
@@ -31,7 +30,7 @@ const App = () => {
       )}
       <main
         style={builderNeonBox(shadowLight, blueNeon, false, isNeon)}
-        className={`flex-auto m-[10px] rounded-[5px] overflow-hidden transition-all duration-500 flex ${style["main-bg"]}`}
+        className={`flex-auto m-[10px] rounded-[5px] overflow-hidden transition-all duration-500 flex main-bg`}
       >
         <div className="min-h-full min-w-full flex-auto">
           <Routes>
