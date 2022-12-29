@@ -186,14 +186,12 @@ export const deleteItem = createAsyncThunk<ICartItem, number, { dispatch: Dispat
     return parseitem;
   }
 );
-
 export const tryProfile = createAsyncThunk<
   IProfile,
   undefined,
   { dispatch: Dispatch; state: RootState; rejectValue: null; fullFilled: IProfile }
 >("profile/tryProfile", async function (_, { dispatch, getState, rejectWithValue, fulfillWithValue }) {
   const products = getState().shop.products.products;
-  const searchData = localStorage.getItem("cart");
   const isAuth = getState().auth.isAuth;
   const uid = getState().auth.user.uid;
 
@@ -290,6 +288,7 @@ export const tryProfile = createAsyncThunk<
 
     await fetchData();
   } else {
+    const searchData = localStorage.getItem("cart");
     if (!!searchData) {
       const parseData = JSON.parse(searchData);
       if (!!parseData && Array.isArray(parseData)) {

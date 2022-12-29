@@ -19,6 +19,7 @@ const ShopPage = () => {
   const aboutProject = useAppSelector((state) => state.appCommon.aboutProject.shop);
   const isHideinfo = useAppSelector((state) => state.appCommon.aboutProject.isHide);
   const isHidePopup = useAppSelector((state) => state.shop.popup.isHide);
+  const isLoadProducts = useAppSelector((state) => state.shop.products.isLoad);
 
   const {
     isAuth,
@@ -33,26 +34,26 @@ const ShopPage = () => {
   const background = `absolute top-0 left-0 w-full h-full bg-[#29557979] z-50 transition-all duration-300 ease-show-elem`;
   const isHideComponent = (isHide: boolean) => (isHide ? "opacity-0 scale-0" : "opacity-1 scale-1");
 
+  const fetchProducts = async () => await dispatch(getAll());
   const searchUser = async () => await dispatch(tryUser());
   const searchProfile = async () => await dispatch(tryProfile());
 
   useEffect(() => {
-    searchProfile();
-  }, [isAuth, uid]);
-
-  useEffect(() => {
+    fetchProducts();
+    searchUser();
     dispatch(toggleHideProjects(true));
     dispatch(setHideHeader(true));
-
-    dispatch(getAll());
-
-    searchUser();
-
     return () => {
       dispatch(toggleHideProjects(false));
       dispatch(setHideHeader(false));
     };
   }, []);
+
+  useEffect(() => {
+    if (!isLoadProducts) {
+      searchProfile();
+    }
+  }, [isAuth, uid, isLoadProducts]);
 
   return (
     <div className="h-full w-full flex flex-col px-2 pb-3">
