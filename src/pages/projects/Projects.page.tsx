@@ -36,7 +36,7 @@ const ProjectsPage = () => {
               className={`flex flex-col gap-y-8 justify-center items-center
               border-solid border border-white rounded-2xl pl-16 pr-9 py-16 relative 
               hover:-translate-x-[25%] md:hover:-translate-x-0 md:hover:-translate-y-10 ${style.shadow} ${style.link}`}
-              to={`/projects/${project.link}`}
+              to={`${ROUTER_LINKS.projects.link}/${project.link}`}
             >
               <span className={`text-center uppercase text-2xl relative ${style.link__title}`}>{project.title}</span>
               <i className={`material-icons w-[64px] text-center !text-6xl ${style["material-icons"]}`}>
