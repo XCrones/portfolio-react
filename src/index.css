@@ -11,3 +11,8 @@
 
 @import "~bootstrap-icons/font/bootstrap-icons.css";
 @import "material-icons/iconfont/material-icons.scss";
+
+.main-bg {
+  background: #1f2738;
+  background: linear-gradient(180deg, #1f2738 0%, #212c44 8%, #1c2946 18%, #1f2738 30%, #141b29 74%);
+}
