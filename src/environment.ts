@@ -28,6 +28,8 @@ interface IFrameworks {
   angular: IProjectItem;
 }
 
+export const URL_SHOP = "https://fakestoreapi.com";
+
 export const URL_FRAMEWORKS: IFrameworks = {
   angular: {
     title: "angular",
