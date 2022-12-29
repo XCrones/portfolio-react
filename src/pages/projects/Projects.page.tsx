@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
+import PreloadComponent from "../../components/preload/Preload.component";
 import { useAppSelector } from "../../hooks/redux";
 import { ROUTER_LINKS } from "../../router-links";
 import style from "./Projects.module.scss";
@@ -53,6 +54,7 @@ const ProjectsPage = () => {
           ))}
         </div>
       )}
+      {isHideLinks && <PreloadComponent />}
       <Outlet />
     </div>
   );
