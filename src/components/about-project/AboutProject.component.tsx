@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { createRef, useEffect, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { toggleHideAboutProject } from "../../store/slices/aboutProjects.slice";
 import { builderNeonText } from "../../store/slices/shadow.slice";
-import style from "./AboutProject.module.scss";
 
 export interface IAboutProject {
   title?: string;
@@ -13,6 +12,12 @@ export interface IAboutProject {
 export interface IPropsInfo {
   about: IAboutProject[];
 }
+
+const style = {
+  fonts: {
+    fontFamily: '"EB Garamond", serif',
+  },
+};
 
 const AboutProjectComponent = (props: IPropsInfo) => {
   const dispatch = useAppDispatch();
@@ -64,7 +69,7 @@ const AboutProjectComponent = (props: IPropsInfo) => {
             </button>
           </div>
         </div>
-        <div className={style.fonts}>
+        <div style={style.fonts}>
           {tempData.map((value, idx) => (
             <div key={idx} className="">
               <div className="flex flex-row pl-1 gap-x-1 items-center">
