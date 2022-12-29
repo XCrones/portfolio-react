@@ -9,13 +9,13 @@ export interface ITodoApi {
 
 export const todoApi = createApi({
   // highlight-start
-  baseQuery: fetchBaseQuery({ baseUrl: "https://jsonplaceholder.typicode.com" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "https://fakestoreapi.com" }),
   // highlight-end
   endpoints: (build) => ({
     // ...endpoints
-    fetchAllPosts: build.query<ITodoApi[], number>({
+    getllProducts: build.query<ITodoApi[], number>({
       query: (limit = 5) => ({
-        url: "/posts",
+        url: "/products",
         params: {
           _limit: limit,
         },
@@ -23,3 +23,5 @@ export const todoApi = createApi({
     }),
   }),
 });
+
+export const { useGetllProductsQuery } = todoApi;
