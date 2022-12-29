@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { userSignOut } from "../../store/slices/auth.slice";
@@ -55,6 +55,8 @@ const RoomComponent = () => {
     mode: "onBlur",
   });
 
+  const refMessages = useRef<HTMLInputElement>(null);
+
   const toggleProfile = () => setHideProfile(!isHideProfile);
 
   const makePathImgLoad = (name: string): string => require(`../../assets/img/${name}.svg`);
@@ -84,14 +86,13 @@ const RoomComponent = () => {
   };
 
   useEffect(() => {
-    const el = document.getElementById("messagesItems");
-    if (!!el) {
-      el.scrollTop = el.scrollHeight;
+    if (!!refMessages.current) {
+      refMessages.current.scrollTop = refMessages.current.scrollHeight;
     }
   }, [messages]);
 
   useEffect(() => {
-    if (currentChat !== undefined) {
+    if (!!currentChat) {
       setHideProfile(true);
     }
   }, [currentChat]);
@@ -204,7 +205,11 @@ const RoomComponent = () => {
           </div>
         </div>
       </div>
-      <div id="messagesItems" className={`flex-[0_0_365px] overflow-y-auto relative h-full ${style.messages}`}>
+      <div
+        ref={refMessages}
+        id="messagesItems"
+        className={`shrink grow basis-0 overflow-y-auto relative h-full ${style.messages}`}
+      >
         <MessagesComponent />
         {isLoadAddCreate && (
           <div className="z-50 absolute top-0 left-0 w-full h-full flex justify-center items-center">
