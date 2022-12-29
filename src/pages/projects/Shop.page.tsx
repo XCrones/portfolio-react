@@ -11,6 +11,7 @@ import { tryUser } from "../../store/slices/auth.slice";
 import { tryProfile } from "../../store/slices/shop/profile.slice";
 import { URL_GIT_PROJECTS } from "../../environment";
 import { ROUTER_LINKS } from "../../router-links";
+import { getAll } from "../../store/slices/shop/products.slice";
 
 const ShopPage = () => {
   const dispatch = useAppDispatch();
@@ -42,7 +43,11 @@ const ShopPage = () => {
   useEffect(() => {
     dispatch(toggleHideProjects(true));
     dispatch(setHideHeader(true));
+
+    dispatch(getAll());
+
     searchUser();
+
     return () => {
       dispatch(toggleHideProjects(false));
       dispatch(setHideHeader(false));
