@@ -14,6 +14,7 @@ const ProductsComponent = () => {
   const { currFilter, stateCurrFilter } = useAppSelector((state) => state.shop.products.filter);
   const valueSearch = useAppSelector((state) => state.shop.products.search);
   const unparsingCart = useAppSelector((state) => state.shop.cart.unparsingCart);
+  const isLoad = useAppSelector((state) => state.shop.products.isLoad);
 
   const sort = (arr: IProductItem[]): IProductItem[] => {
     let filter = currFilter;
@@ -128,7 +129,7 @@ const ProductsComponent = () => {
           ))}
         </div>
       </div>
-      {products.length < 1 && (
+      {isLoad && (
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300">
           <img src={makePathImgLoad("load")} alt="load" />
         </div>
