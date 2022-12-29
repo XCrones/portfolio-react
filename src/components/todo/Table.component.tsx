@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { useWindowSize } from "../../hooks/windowResize";
 import { ITasks, sortItems, toggleComplete } from "../../store/slices/todo/list.slice";
 import { IShowModal, showModal } from "../../store/slices/todo/modal.slice";
 import style from "./Table.module.scss";
@@ -22,6 +23,7 @@ const TableComponent = () => {
   ];
 
   const [filterSort, setFilterSort] = useState({ type: "", state: false });
+  const { windowWidth } = useWindowSize();
 
   const editItem = (item: ITasks) => {};
 
@@ -45,12 +47,10 @@ const TableComponent = () => {
 
   const parsePriority = (value: number): string => (value === 0 ? "низкий" : value === 1 ? "средний" : "высокий");
 
-  const resize = () => {
-    const sm: number = 640;
-    const md: number = 768;
-    const lg: number = 1024;
-
-    const width = window.innerWidth;
+  const resize = (width: number) => {
+    const sm = 640;
+    const md = 768;
+    const lg = 1024;
 
     if (width < lg) {
       const elPriority = document.getElementById("btn-filter-3");
@@ -90,13 +90,8 @@ const TableComponent = () => {
   };
 
   useEffect(() => {
-    resize();
-    window.addEventListener("resize", resize, true);
-
-    return () => {
-      window.removeEventListener("resize", resize, true);
-    };
-  }, []);
+    resize(windowWidth);
+  }, [windowWidth]);
 
   useEffect(() => {
     dispatch(

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import usePaginator from "../../hooks/paginator";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { useWindowSize } from "../../hooks/windowResize";
 import { builderNeonText } from "../../store/slices/shadow.slice";
 import { slicePrice, sliceString } from "../../store/slices/shop/cart.slice";
 import { showCart, showProfile } from "../../store/slices/shop/header.slice";
@@ -16,8 +17,9 @@ const CartComponent = () => {
   const isLoadData = useAppSelector((state) => state.shop.profile.isLoad.cart);
 
   const [titleLength, setTitleLength] = useState(30);
-
   const { currentData, pages, isCurrentPage, jumpPage } = usePaginator(4, cart);
+  const { windowWidth } = useWindowSize();
+
   const makePathImgLoad = (name: string): string => require(`../../assets/img/${name}.svg`);
 
   const totalPrice = (): number => {
@@ -32,19 +34,11 @@ const CartComponent = () => {
     return 0;
   };
 
-  const resizeTitle = () => {
-    const width = window.innerWidth;
-    width < 640 ? setTitleLength(15) : setTitleLength(30);
-  };
+  const resizeTitle = (width: number) => (width < 640 ? setTitleLength(20) : setTitleLength(30));
 
   useEffect(() => {
-    resizeTitle();
-    window.addEventListener("resize", resizeTitle, true);
-
-    return () => {
-      window.removeEventListener("resize", resizeTitle, true);
-    };
-  }, []);
+    resizeTitle(windowWidth);
+  }, [windowWidth]);
 
   const increment = async (id: number) => {
     await dispatch(incrementItem(id));

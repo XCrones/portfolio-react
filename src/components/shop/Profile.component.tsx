@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import usePaginator from "../../hooks/paginator";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { useWindowSize } from "../../hooks/windowResize";
 import { userSignOut } from "../../store/slices/auth.slice";
 import { builderNeonText } from "../../store/slices/shadow.slice";
 import { slicePrice } from "../../store/slices/shop/cart.slice";
@@ -22,6 +23,7 @@ const ProfileComponent = () => {
   const isHidePurchase = useAppSelector((state) => state.shop.purchase.isHide);
 
   const { currentData, pages, isCurrentPage, jumpPage, editSumItems } = usePaginator(5, purchases);
+  const { windowWidth } = useWindowSize();
 
   const makePathImgLoad = (name: string): string => require(`../../assets/img/${name}.svg`);
 
@@ -33,24 +35,16 @@ const ProfileComponent = () => {
 
   const closeProfile = () => dispatch(showProfile());
 
-  const resizePaginator = () => {
-    const width = window.innerWidth;
-    width < 640 ? editSumItems(6) : editSumItems(5);
-  };
-
   const signOut = async () => {
     await dispatch(profileSignOut());
     await dispatch(userSignOut());
   };
 
-  useEffect(() => {
-    resizePaginator();
-    window.addEventListener("resize", resizePaginator, true);
+  const resizePaginator = (width: number) => (width < 640 ? editSumItems(6) : editSumItems(5));
 
-    return () => {
-      window.removeEventListener("resize", resizePaginator, true);
-    };
-  }, []);
+  useEffect(() => {
+    resizePaginator(windowWidth);
+  }, [windowWidth]);
 
   return (
     <>

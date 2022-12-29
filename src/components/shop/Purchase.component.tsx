@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import usePaginator from "../../hooks/paginator";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { useWindowSize } from "../../hooks/windowResize";
 import { slicePrice, sliceString } from "../../store/slices/shop/cart.slice";
 import { closePurchase } from "../../store/slices/shop/purchase.slice";
 
@@ -10,22 +11,14 @@ const PurchaseComponent = () => {
   const purchase = useAppSelector((state) => state.shop.purchase.purchase);
 
   const [titleLength, setTitleLength] = useState(30);
-
   const { currentData, pages, isCurrentPage, jumpPage } = usePaginator(4, purchase.items);
+  const { windowWidth } = useWindowSize();
 
-  const resizeTitle = () => {
-    const width = window.innerWidth;
-    width < 640 ? setTitleLength(15) : setTitleLength(30);
-  };
+  const resizeTitle = (width: number) => (width < 640 ? setTitleLength(15) : setTitleLength(30));
 
   useEffect(() => {
-    resizeTitle();
-    window.addEventListener("resize", resizeTitle, true);
-
-    return () => {
-      window.removeEventListener("resize", resizeTitle, true);
-    };
-  }, []);
+    resizeTitle(windowWidth);
+  }, [windowWidth]);
 
   return (
     <div className="h-full w-full px-2 py-2 flex flex-col justify-between gap-y-3">

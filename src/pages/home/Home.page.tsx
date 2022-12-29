@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import usePaginator from "../../hooks/paginator";
 import { useAppSelector } from "../../hooks/redux";
+import { useWindowSize } from "../../hooks/windowResize";
 import { builderNeonText } from "../../store/slices/shadow.slice";
 import style from "./Home.module.scss";
 
@@ -11,22 +12,15 @@ const HomePage = () => {
   const shadowLight = useAppSelector((state) => state.appCommon.shadow.stylesShadow.light);
 
   const { currentData, pages, isCurrentPage, jumpPage, editSumItems } = usePaginator(6, skills);
+  const { windowWidth } = useWindowSize();
 
   const makePathImg = (img: string): string => require(`../../assets/img/skills/${img}.png`);
 
-  const resizePaginator = () => {
-    const width = window.innerWidth;
-    width < 640 ? editSumItems(3) : editSumItems(6);
-  };
+  const resizePaginator = (width: number) => (width < 640 ? editSumItems(3) : editSumItems(6));
 
   useEffect(() => {
-    resizePaginator();
-    window.addEventListener("resize", resizePaginator, true);
-
-    return () => {
-      window.removeEventListener("resize", resizePaginator, true);
-    };
-  }, []);
+    resizePaginator(windowWidth);
+  }, [windowWidth]);
 
   return (
     <div className="text-white py-[15px] px-[5px] flex flex-col h-full w-full">
