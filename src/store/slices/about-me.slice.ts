@@ -1,17 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+interface ISearch {
+  about: string;
+  goal: string;
+}
+
 interface IAboutMe {
   title: string;
   frameWork: string;
   greetings: string;
   whatIsThis: string;
-  search: [{ about: string; goal: string }, { about: string; goal: string }, { about: string; goal: string }];
+  search: ISearch[];
   subtitle: string;
 }
 
 interface ISkills {
-  title: string;
-  about: Array<string>;
+  about: string[];
   img: string;
 }
 
@@ -24,95 +28,82 @@ const initialStateValue: IStateInitial = {
   aboutMe: {
     title: "frontend developer",
     frameWork: "react",
-    greetings: "привет, меня зовут Сергей!",
+    greetings: "привет, меня зовут Сергей, я занимаюсь web разработкой.",
     whatIsThis: "данное портфолио демонстрирует мой уровень компетенции в web разработке.",
     search: [
       { about: "моя цель: ", goal: "поиск работы;" },
       { about: "позиция: ", goal: "frontend developer react;" },
-      { about: "опыт работы: ", goal: "2 года;" },
     ],
     subtitle: "буду рад вашим предложениям!",
   },
   skills: [
     {
-      title: "уверенное знание HTML",
       img: "html",
-      about: ["семантическая вёрстка", "адаптивная вёрстка", "именование по БЭМ"],
+      about: ["изучил язык разметки HTML", "применял теги и атрибуты", "научился применять семантику"],
     },
     {
-      title: "уверенное знание CSS",
       img: "css",
-      about: ["flexbox", "animation", "SCSS(SASS)"],
+      about: ["изучил каскадные таблицы стилей CSS", "научился стилизовать элементы", "научился применять flexbox"],
     },
     {
-      title: "хорошее знание JS",
       img: "js",
-      about: ["ES6+", "promise", "SCSS(fetch)"],
+      about: ["изучил язык javascript", "изучил навигацию по DOM", "применял promise, async/await"],
     },
     {
-      title: "хорошее знание TS",
       img: "ts",
-      about: ["interfaces", "types", "OOP"],
+      about: ["изучил язык typescript", "научился использовать interfaces", "применял ООП"],
     },
     {
-      title: "хорошее знание react.js",
       img: "react",
-      about: ["react-router, hooks", "react-hook-form", "unit-test"],
+      about: ["изучил библиотеку React.js", "применял принцип replace components", "научился использовать hooks"],
     },
     {
-      title: "хорошее знание redux",
       img: "redux",
-      about: ["RTK", "reducers", "async thunk"],
+      about: ["изучил state manager Redux", "научился применять reducers", "применял async thunk"],
     },
     {
-      title: "хорошее знание Angular",
       img: "angular",
-      about: ["RxJs", "DI", "Animations"],
+      about: ["изучил framework Angular", "научился внедрять зависимости", "применял services"],
     },
     {
-      title: "хорошее знание Tailwind css",
       img: "tailwind",
-      about: ["Breakpoints", "Flexbox/Grid", "Transitions/Animation"],
+      about: [
+        "изучил css framework TailwindCss",
+        "научился применять Transitions/Animation",
+        "применял Responsive Design",
+      ],
     },
     {
-      title: "основы Webpack",
       img: "webpack",
-      about: ["установка loaders", "установка modules", "преобразование SASS/SCSS"],
+      about: ["изучил основы Webpack", "научился устанавливать loaders/modules", "применял преобразование SASS/SCSS"],
     },
     {
-      title: "знание на уровне auth/firestore",
       img: "firebase",
-      about: ["auth", "firestore", "database"],
+      about: ["изучил сервис Firebase", "научился внедрять Auth", "применял firestore database"],
     },
     {
-      title: "базовое управление пакетами",
-      img: "npm",
-      about: ["install", "remove", "update"],
-    },
-    {
-      title: "базовое знание библиотеки",
-      img: "jquery",
-      about: ["доступ к элементам/аттрибутам", "цепочки методов", "анимации"],
-    },
-    {
-      title: "базовое знание редактора",
-      img: "ps",
-      about: ["свойства элементов", "нарезка элементов", "горячие клавиши"],
-    },
-    {
-      title: "базовое знание редактора",
-      img: "figma",
-      about: ["свойства элементов", "экспорт", "горячие клавиши"],
-    },
-    {
-      title: "базовое знание GIT",
       img: "git",
-      about: ["push/pull", "status, add, commit", "checkout"],
+      about: ["изучил основы GIT", "применял push, pull", "применял status, add, commit"],
     },
     {
-      title: "основы БЭМ",
       img: "bem",
-      about: ["html", "css", "js"],
+      about: ["изучил основы BEM-naming", "научился применять в вёрстке", "применял именование классов"],
+    },
+    {
+      img: "npm",
+      about: ["изучил базовые манипуляции NPM", "научился установке/удалению пакетов", "научился обновлеять пакеты"],
+    },
+    {
+      img: "jquery",
+      about: ["изучил основы библиотеки JQuery", "научился применять цепочки методов", "научился создавать анимации"],
+    },
+    {
+      img: "ps",
+      about: ["базовое понимание редактора", "нарезка элементов", "горячие клавиши"],
+    },
+    {
+      img: "figma",
+      about: ["базовое понимание редактора", "свойства элементов", "экспорт"],
     },
   ],
 };
