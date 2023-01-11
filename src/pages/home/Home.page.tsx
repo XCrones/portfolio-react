@@ -56,14 +56,15 @@ const HomePage = () => {
           <div className="flex-auto flex flex-col flex-nowrap lg:flex-row lg:flex-wrap w-full justify-start pl-2 items-start gap-y-3 lg:gap-y-0">
             {currentData().map((item, idx) => (
               <div key={idx} className="flex flex-row items-center flex-[0_1_50%] md:gap-x-2">
-                <div className={`w-[64px] h-[64px] ${style["show-img"]}`}>
-                  <img src={makePathImg(item.img)} className="max-w-full max-h-full" alt="item.img" />
+                <div className={`w-[64px] h-[64px] ${style["show-img"]} `}>
+                  <div className="h-full w-full flex justify-center items-center">
+                    <img src={makePathImg(item.img)} className="max-w-full max-h-full flex-auto" alt="item.img" />
+                  </div>
                 </div>
                 <div className="">
-                  <h3 className={`text-[15px] first-letter:uppercase ${style["show-title"]}`}>{item.title}</h3>
                   {item.about.map((value: any, index: number) => (
-                    <h4 key={index} className={`capitalize text-[13px] ${style["show-text"]}`}>
-                      &nbsp; - &nbsp;{value}
+                    <h4 key={index} className={`text-[13px] ${style["show-text"]}`}>
+                      &nbsp; - &nbsp;<span className="first-letter:uppercase">{value}</span>
                     </h4>
                   ))}
                 </div>
